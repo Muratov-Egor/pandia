@@ -135,3 +135,6 @@ dist
 
 #other
 .idea/
+allure-results
+allure-report
+

@@ -12,6 +12,10 @@
   "scripts": {
     "test": "npx playwright test",
     "ui-test": "npx playwright test --ui",
-    "report": "npx playwright show-report"
+    "report": "allure generate allure-results -o allure-report --clean && allure serve allure-results"
+  },
+  "dependencies": {
+    "allure-commandline": "^2.26.0",
+    "allure-playwright": "^2.11.1"
   }
 }
