@@ -1,5 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
-import { testPlanFilter } from "allure-playwright/dist/testplan";
+import {defineConfig, devices} from '@playwright/test';
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -39,6 +38,7 @@ export default defineConfig({
     baseURL: process.env.URL ? process.env.URL : 'https://aviasales.ru',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    testIdAttribute: 'data-test-id',
   },
 
   /* Configure projects for major browsers */
