@@ -6,7 +6,11 @@ import {SearchFormPage} from "../pages/explore/searchForm.page";
 import {MOSCOW_NP_FLIGHT} from "../constants/explore/DirectionUrl";
 import {IataCityCode} from "../enums/IataCityCode";
 
+import {allureTestInfo} from "../utils/AllureHelper";
+
 test('Hide "Cities" widget after choosing a city card', async ({page}) => {
+  await allureTestInfo({id: "8418", owner: "Egor Muratov", team: "Explore"});
+
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
   await page.goto(MOSCOW_NP_FLIGHT);
@@ -21,6 +25,8 @@ test('Hide "Cities" widget after choosing a city card', async ({page}) => {
 });
 
 test('Hide "Cities" widget after choosing a city card from "All cities" modal', async ({page}) => {
+  await allureTestInfo({id: "8416", owner: "Egor Muratov", team: "Explore"});
+
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
   await page.goto(MOSCOW_NP_FLIGHT);
@@ -35,6 +41,8 @@ test('Hide "Cities" widget after choosing a city card from "All cities" modal', 
 });
 
 test('Hide "Cities" widget after typing a city as destination', async ({page}) => {
+  await allureTestInfo({id: "8417", owner: "Egor Muratov", team: "Explore"});
+
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
   await page.goto(MOSCOW_NP_FLIGHT);

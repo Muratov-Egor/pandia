@@ -26,9 +26,9 @@ export default defineConfig({
       [
         "allure-playwright",
         {
-          detail: true,
+          detail: false,
           outputFolder: "allure-results",
-          suiteTitle: false,
+          suiteTitle: true,
         },
       ],
     ],
@@ -38,6 +38,9 @@ export default defineConfig({
     baseURL: process.env.URL ? process.env.URL : 'https://aviasales.ru',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    /* Capture screenshot after each test failure. */
+    screenshot: 'only-on-failure',
+    /* Custom attribute to be used in page.getByTestId() */
     testIdAttribute: 'data-test-id',
   },
 
@@ -65,7 +68,7 @@ export default defineConfig({
     // },
     {
       name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      use: { ...devices['iPhone 15'] },
     },
 
     /* Test against branded browsers. */

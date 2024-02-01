@@ -1,4 +1,5 @@
 import {expect, Locator, Page} from "@playwright/test";
+import {allure} from "allure-playwright";
 
 export class SearchFormPage {
   readonly page: Page;
@@ -24,8 +25,12 @@ export class SearchFormPage {
   }
 
   async fillInFieldAndSelect(inputLocator: Locator, inputValue: string, prefix: string) {
-    await inputLocator.fill(inputValue);
-    await this.page.getByTestId(`${prefix}${inputValue}`).click();
+    const field = inputLocator === this.originInput ? 'origin' : 'destination';
+
+    await allure.step(`Fill in field ${field} and select ${inputValue}`, async () => {
+      await inputLocator.fill(inputValue);
+      await this.page.getByTestId(`${prefix}${inputValue}`).click();
+    });
   }
 
   async fillInOrigin(param: { cityIata?: string, airportIata?: string }) {
@@ -47,8 +52,8 @@ export class SearchFormPage {
     isAnywhere?: boolean,
     isWeekend?: boolean
   }) {
-    const {cityIata, airportIata, countryCode, isAnywhere, isWeekend} = param;
 
+    const {cityIata, airportIata, countryCode, isAnywhere, isWeekend} = param;
     if (cityIata) {
       await this.fillInFieldAndSelect(this.destinationInput, cityIata, this.suggestedCityPrefix);
     }
@@ -62,28 +67,36 @@ export class SearchFormPage {
     }
 
     if (isAnywhere) {
-      await this.destinationInput.fill('anywhere');
-      await this.suggestedAnywhere.click();
+      await allure.step(`Choose anywhere item`, async () => {
+        await this.destinationInput.fill('anywhere');
+        await this.suggestedAnywhere.click();
+      });
     }
 
     if (isWeekend) {
-      await this.destinationInput.fill('weekend');
-      await this.suggestedWeekend.click();
+      await allure.step(`Choose weekend item`, async () => {
+        await this.destinationInput.fill('weekend');
+        await this.suggestedWeekend.click();
+      });
     }
   }
 
   async waitForSearchFormToLoad(isDestination: boolean = false) {
-    await expect(this.searchForm).toBeVisible();
-    await expect(this.formSubmitButton).toBeEnabled();
-    await expect(this.originInput).toHaveAttribute('value');
+    await allure.step('Wait for search form to load', async () => {
+      await expect(this.searchForm).toBeVisible();
+      await expect(this.formSubmitButton).toBeEnabled();
+      await expect(this.originInput).toHaveAttribute('value');
 
-    if (isDestination) {
-      await expect(this.destinationInput).toHaveAttribute('value');
-    }
+      if (isDestination) {
+        await expect(this.destinationInput).toHaveAttribute('value');
+      }
+    });
   }
 
   async assertThatDestinationIsEqualToExpected(expectedDestination: string) {
-    const destinationInputValue = await this.destinationInput.getAttribute('value');
-    expect(destinationInputValue).toEqual(expectedDestination);
+    await allure.step(`Assert that destination is equal to ${expectedDestination}`, async () => {
+      const destinationInputValue = await this.destinationInput.getAttribute('value');
+      expect(destinationInputValue).toEqual(expectedDestination);
+    });
   }
 }

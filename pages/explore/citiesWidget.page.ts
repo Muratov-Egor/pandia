@@ -1,4 +1,5 @@
 import {expect, Locator, Page} from '@playwright/test';
+import {allure} from "allure-playwright";
 
 export class CitiesWidgetPage {
   readonly page: Page;
@@ -22,27 +23,37 @@ export class CitiesWidgetPage {
   }
 
   async selectCity(isModal = false) {
-    const cityCard = isModal ? this.cityCardInModal : this.cityCard;
-    await cityCard.click();
+    await allure.step('Select city', async () => {
+      const cityCard = isModal ? this.cityCardInModal : this.cityCard;
+      await cityCard.click();
+    });
   }
 
   async getCityName(isModal = false) {
-    return isModal ? await this.cityNameInModal.textContent() : await this.cityName.textContent();
+    return allure.step('Get city name', async () => {
+      return isModal ? await this.cityNameInModal.textContent() : await this.cityName.textContent();
+    });
   }
 
   async openAllCitiesModal() {
-    await this.allCityButton.click();
+    await allure.step('Open all cities modal', async () => {
+      await this.allCityButton.click();
 
-    await expect(this.allCityModal).toBeVisible();
-    await expect(this.cityCardInModal).toBeVisible();
+      await expect(this.allCityModal).toBeVisible();
+      await expect(this.cityCardInModal).toBeVisible();
+    });
   }
 
   async assertThatCityListIsVisible() {
-    await expect(this.cityList).toBeVisible();
-    await expect(this.cityCard).toBeVisible();
+    await allure.step('Assert that city list is visible', async () => {
+      await expect(this.cityList).toBeVisible();
+      await expect(this.cityCard).toBeVisible();
+    });
   }
 
   async assertThatCityListIsNotVisible() {
-    await expect(this.cityList).not.toBeVisible();
+    await allure.step('Assert that city list is not visible', async () => {
+      await expect(this.cityList).not.toBeVisible();
+    });
   }
 }
