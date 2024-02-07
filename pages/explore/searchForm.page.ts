@@ -33,10 +33,6 @@ export class SearchFormPage {
     this.endDateValue = page.getByTestId('end-date-value');
     this.hotelCheckbox = page.getByTestId('checkbox');
     this.passengerNumbers = page.getByTestId('passenger-numbers');
-
-
-    // const ORIGIN_FIELD = `//*[@${TEST_ATTRIBUTE}="origin-input"]`
-    // const ORIGIN_IATA = `${FORM_INPUT}${ORIGIN_FIELD}/following-sibling::*[@${TEST_ATTRIBUTE}="iata"]`
   }
 
   async openCalendar() {
