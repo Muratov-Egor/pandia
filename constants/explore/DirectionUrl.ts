@@ -1,1 +1,2 @@
 export const MOSCOW_NP_FLIGHT = '/?params=MOWNP1'
+export const MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY = '/?params=MOW2106LON17071'
