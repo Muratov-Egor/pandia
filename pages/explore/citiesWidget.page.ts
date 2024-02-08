@@ -23,20 +23,20 @@ export class CitiesWidgetPage {
   }
 
   async selectCity(isModal = false) {
-    await allure.step('Select city', async () => {
+    await allure.step('Выбрать первый город из списка', async () => {
       const cityCard = isModal ? this.cityCardInModal : this.cityCard;
       await cityCard.click();
     });
   }
 
   async getCityName(isModal = false) {
-    return allure.step('Get city name', async () => {
+    return allure.step('Получить название первого города ', async () => {
       return isModal ? await this.cityNameInModal.textContent() : await this.cityName.textContent();
     });
   }
 
   async openAllCitiesModal() {
-    await allure.step('Open all cities modal', async () => {
+    await allure.step('Открыть модальное окно "Все города страны"', async () => {
       await this.allCityButton.click();
 
       await expect(this.allCityModal).toBeVisible();
@@ -45,14 +45,14 @@ export class CitiesWidgetPage {
   }
 
   async assertThatCityListIsVisible() {
-    await allure.step('Assert that city list is visible', async () => {
+    await allure.step('Виджет "Городов" отображается', async () => {
       await expect(this.cityList).toBeVisible();
       await expect(this.cityCard).toBeVisible();
     });
   }
 
   async assertThatCityListIsNotVisible() {
-    await allure.step('Assert that city list is not visible', async () => {
+    await allure.step('Виджет "Городов" не отображается', async () => {
       await expect(this.cityList).not.toBeVisible();
     });
   }

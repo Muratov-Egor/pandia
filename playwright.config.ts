@@ -62,14 +62,14 @@ export default defineConfig({
     // },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
     {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 15'] },
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 8'] },
     },
+    // {
+    //   name: 'Mobile Safari',
+    //   use: { ...devices['iPhone 15'] },
+    // },
 
     /* Test against branded browsers. */
     // {
