@@ -1,5 +1,6 @@
 import {Locator, Page} from "@playwright/test";
 import {dateInCalendarFormat} from "../../utils/DateFormarter";
+import {allure} from "allure-playwright";
 
 export class CalendarPage {
   readonly page: Page;
@@ -13,18 +14,28 @@ export class CalendarPage {
   }
 
   async selectTripDurationDates(startDate: Date, endDate?: Date) {
-    await this.chooseDate(startDate);
+    await allure.step(`Выбор даты вылета`, async () => {
+      await this.chooseDate(startDate);
+    });
+
 
     if (endDate) {
-      await this.chooseDate(endDate);
+      await allure.step(`Выбор даты возвращения`, async () => {
+        await this.chooseDate(endDate);
+      });
     } else {
-      await this.calendarActionButton.click()
+      await allure.step('Клик по кнопке "Обратный билет не нужен"', async () => {
+        await this.calendarActionButton.click()
+      });
     }
   }
 
   private async chooseDate(date: Date) {
     const dateInCalendar = dateInCalendarFormat(date);
-    await this.page.getByTestId(this.date + dateInCalendar).hover();
-    await this.page.getByTestId(this.date + dateInCalendar).click()
+
+    await allure.step(`Выбрать дату ${dateInCalendar}`, async () => {
+      await this.page.getByTestId(this.date + dateInCalendar).hover();
+      await this.page.getByTestId(this.date + dateInCalendar).click()
+    });
   }
 }

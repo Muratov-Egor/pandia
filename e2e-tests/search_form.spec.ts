@@ -7,7 +7,7 @@ import {IataCityCode} from "../enums/IataCityCode";
 import {nextWeek, today} from "../utils/GetDate";
 import {MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY} from "../constants/explore/DirectionUrl";
 
-test('After going to the /search page from the main page, the search form remains filled out', async ({page}) => {
+test('После перехода на страницу /search с главной страницы форма поиска остается заполненнойt', async ({page}) => {
   await allureTestInfo({id: "9435", owner: "Egor Muratov", team: "Explore"});
 
   const searchFormPage = new SearchFormPage(page);
@@ -29,7 +29,7 @@ test('After going to the /search page from the main page, the search form remain
   await searchFormPage.assertThatEndDateIsEqualToExpected(nextWeek);
 });
 
-test('Opening a pre-filled search form by following a direct link', async ({page}) => {
+test('Открытие предварительно заполненной формы поиска по прямой ссылке', async ({page}) => {
   await allureTestInfo({id: "9434", owner: "Egor Muratov", team: "Explore"});
 
   const searchFormPage = new SearchFormPage(page);

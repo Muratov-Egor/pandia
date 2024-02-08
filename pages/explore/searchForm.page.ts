@@ -36,7 +36,7 @@ export class SearchFormPage {
   }
 
   async openCalendar() {
-    await allure.step('Open calendar', async () => {
+    await allure.step('Открыть календарь', async () => {
       await this.startDateInput.click();
     });
   }
@@ -75,14 +75,14 @@ export class SearchFormPage {
     }
 
     if (isAnywhere) {
-      await allure.step(`Choose anywhere item`, async () => {
+      await allure.step(`Выбрать "Куда угодно"`, async () => {
         await this.destinationInput.fill('anywhere');
         await this.suggestedAnywhere.click();
       });
     }
 
     if (isWeekend) {
-      await allure.step(`Choose weekend item`, async () => {
+      await allure.step(`Выбрать "Улететь на выходные"`, async () => {
         await this.destinationInput.fill('weekend');
         await this.suggestedWeekend.click();
       });
@@ -90,7 +90,7 @@ export class SearchFormPage {
   }
 
   async waitForSearchFormToLoad(isDestination: boolean = false) {
-    await allure.step('Wait for search form to load', async () => {
+    await allure.step('Дождаться когда форма полностью загрузится', async () => {
       await expect(this.searchForm).toBeVisible();
       await expect(this.formSubmitButton).toBeEnabled();
       await expect(this.originInput).toHaveAttribute('value');
@@ -109,19 +109,19 @@ export class SearchFormPage {
   }
 
   async uncheckHotelCheckbox() {
-    await allure.step('Uncheck hotel checkbox', async () => {
+    await allure.step('Снять отельный чекбокс', async () => {
       await this.hotelCheckbox.click();
     });
   }
 
   async startSearch() {
-    await allure.step('Start search', async () => {
+    await allure.step('Запустить поиск', async () => {
       await this.formSubmitButton.click();
     });
   }
 
   async assertThatDirectionIsEqualToExpected(origin: string, destination: string) {
-    await allure.step(`Assert that direction is equal to ${origin} - ${destination}`, async () => {
+    await allure.step(`В поле "Откуда" введно: ${origin}, а в поле "Куда" введено: ${destination}`, async () => {
       await expect(this.originInput).toHaveValue(origin);
       await expect(this.destinationInput).toHaveValue(destination);
     });
@@ -129,7 +129,7 @@ export class SearchFormPage {
 
   async assertThatStartDateIsEqualToExpected(date: Date) {
     const startDate = dateInSearchForm(date)
-    await allure.step(`Assert that start date is equal to ${startDate}`, async () => {
+    await allure.step(`Дата "Туда" равна ${startDate}`, async () => {
       const startDateValue = await this.startDateValue.textContent();
       expect(startDateValue).toContain(startDate);
     });
@@ -137,16 +137,16 @@ export class SearchFormPage {
 
   async assertThatEndDateIsEqualToExpected(date: Date) {
     const endDate = dateInSearchForm(date)
-    await allure.step(`Assert that end date is equal to ${endDate}`, async () => {
+    await allure.step(`Дата "Обратно" равна: ${endDate}`, async () => {
       const endDateValue = await this.endDateValue.textContent();
       expect(endDateValue).toContain(endDate);
     });
   }
 
   private async fillInFieldAndSelect(inputLocator: Locator, inputValue: string, prefix: string) {
-    const field = inputLocator === this.originInput ? 'origin' : 'destination';
+    const field = inputLocator === this.originInput ? 'Откуда' : 'Куда';
 
-    await allure.step(`Fill in field ${field} and select ${inputValue}`, async () => {
+    await allure.step(`Ввести в поле ${field} значение: ${inputValue}`, async () => {
       await inputLocator.fill(inputValue);
       await this.page.getByTestId(`${prefix}${inputValue}`).click();
     });
