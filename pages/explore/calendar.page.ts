@@ -6,7 +6,7 @@ export class CalendarPage {
   readonly page: Page;
   readonly calendarActionButton: Locator;
 
-  private readonly date: string = 'date-';
+  private readonly date: string = 'xpath=//*[@data-test-id="date-*#*"]';
 
   constructor(page: Page) {
     this.page = page;
@@ -17,7 +17,6 @@ export class CalendarPage {
     await allure.step(`Выбор даты вылета`, async () => {
       await this.chooseDate(startDate);
     });
-
 
     if (endDate) {
       await allure.step(`Выбор даты возвращения`, async () => {
@@ -34,8 +33,9 @@ export class CalendarPage {
     const dateInCalendar = dateInCalendarFormat(date);
 
     await allure.step(`Выбрать дату ${dateInCalendar}`, async () => {
-      await this.page.getByTestId(this.date + dateInCalendar).hover();
-      await this.page.getByTestId(this.date + dateInCalendar).click()
+      const currentData = this.date.replace('*#*', dateInCalendar);
+      await this.page.locator(currentData).hover();
+      await this.page.locator(currentData).click();
     });
   }
 }

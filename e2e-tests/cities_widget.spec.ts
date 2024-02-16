@@ -13,7 +13,7 @@ test('Скрыть виджет "Городов" после выбора  пер
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_NP_FLIGHT);
+  await page.goto(MOSCOW_NP_FLIGHT, {waitUntil: 'domcontentloaded'});
   await searchFormPage.waitForSearchFormToLoad(true)
 
   await citiesWidgetPage.assertThatCityListIsVisible();
@@ -29,7 +29,7 @@ test('Скрыть виджет "Городов" после выбора пер�
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_NP_FLIGHT);
+  await page.goto(MOSCOW_NP_FLIGHT, {waitUntil: 'domcontentloaded'});
   await searchFormPage.waitForSearchFormToLoad(true)
 
   await citiesWidgetPage.openAllCitiesModal();
@@ -45,7 +45,7 @@ test('Скрыть виджет "Городов"  после указания г
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_NP_FLIGHT);
+  await page.goto(MOSCOW_NP_FLIGHT, {waitUntil: 'domcontentloaded'});
   await searchFormPage.waitForSearchFormToLoad(true)
 
   await citiesWidgetPage.assertThatCityListIsVisible();

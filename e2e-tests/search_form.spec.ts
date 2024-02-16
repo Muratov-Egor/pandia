@@ -13,27 +13,30 @@ test('После запуска поиска на странице /search се�
   const searchFormPage = new SearchFormPage(page);
   const calendar = new CalendarPage(page);
 
-  await page.goto('/');
+  await page.goto('/', {waitUntil: 'domcontentloaded'});
   await searchFormPage.waitForSearchFormToLoad();
 
   await searchFormPage.fillInOrigin({airportIata: IataAirportCode.VKO});
   await searchFormPage.fillInDestination({cityIata: IataCityCode.LED});
   await searchFormPage.openCalendar();
   await calendar.selectTripDurationDates(today, nextWeek);
+  await searchFormPage.selectNumberOfPassengerAndTripClass({adults: 3, children: 2, infant: 2, tripClass: 'C'});
   await searchFormPage.uncheckHotelCheckbox();
   await searchFormPage.startSearch();
-  await page.waitForURL('**/search/*');
+  await page.waitForURL('**/search/*', {waitUntil: 'domcontentloaded'});
 
   await searchFormPage.assertThatDirectionIsEqualToExpected('Внуково', 'Санкт-Петербург');
   await searchFormPage.assertThatStartDateIsEqualToExpected(today);
   await searchFormPage.assertThatEndDateIsEqualToExpected(nextWeek);
+  await searchFormPage.assertThatNumberOfPassengersIsEqualToExpected(7)
+  await searchFormPage.assertThatTripClassIsEqualToExpected('Бизнес');
 });
 
 test('Открытие предварительно заполненной формы поиска по прямой ссылке', async ({page}) => {
   await allureTestInfo({id: "9434", owner: "Egor Muratov", team: "Explore"});
 
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY);
+  await page.goto(MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY, {waitUntil: 'domcontentloaded'});
 
   await searchFormPage.assertThatDirectionIsEqualToExpected('Москва', 'Лондон');
   await searchFormPage.assertThatStartDateIsEqualToExpected(new Date('June 21'));
