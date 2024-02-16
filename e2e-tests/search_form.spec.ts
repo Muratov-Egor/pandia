@@ -7,7 +7,7 @@ import {IataCityCode} from "../enums/IataCityCode";
 import {nextWeek, today} from "../utils/GetDate";
 import {MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY} from "../constants/explore/DirectionUrl";
 
-test('После перехода на страницу /search с главной страницы форма поиска остается заполненнойt', async ({page}) => {
+test('После запуска поиска на странице /search серчфома остается заполненной', async ({page}) => {
   await allureTestInfo({id: "9435", owner: "Egor Muratov", team: "Explore"});
 
   const searchFormPage = new SearchFormPage(page);

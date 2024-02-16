@@ -41,6 +41,15 @@ export class SearchFormPage {
     });
   }
 
+  private async fillInFieldAndSelect(inputLocator: Locator, inputValue: string, prefix: string) {
+    const field = inputLocator === this.originInput ? 'Откуда' : 'Куда';
+
+    await allure.step(`Ввести в поле ${field} значение: ${inputValue}`, async () => {
+      await inputLocator.fill(inputValue);
+      await this.page.getByTestId(`${prefix}${inputValue}`).click();
+    });
+  }
+
   async fillInOrigin(param: { cityIata?: string, airportIata?: string }) {
     const {cityIata, airportIata} = param;
 
@@ -102,7 +111,7 @@ export class SearchFormPage {
   }
 
   async assertThatDestinationIsEqualToExpected(expectedDestination: string) {
-    await allure.step(`Assert that destination is equal to ${expectedDestination}`, async () => {
+    await allure.step(`В поле "Куда" указано: ${expectedDestination}`, async () => {
       const destinationInputValue = await this.destinationInput.getAttribute('value');
       expect(destinationInputValue).toEqual(expectedDestination);
     });
@@ -121,7 +130,7 @@ export class SearchFormPage {
   }
 
   async assertThatDirectionIsEqualToExpected(origin: string, destination: string) {
-    await allure.step(`В поле "Откуда" введно: ${origin}, а в поле "Куда" введено: ${destination}`, async () => {
+    await allure.step(`В поле "Откуда" указано: ${origin}, а в поле "Куда" указано: ${destination}`, async () => {
       await expect(this.originInput).toHaveValue(origin);
       await expect(this.destinationInput).toHaveValue(destination);
     });
@@ -129,7 +138,7 @@ export class SearchFormPage {
 
   async assertThatStartDateIsEqualToExpected(date: Date) {
     const startDate = dateInSearchForm(date)
-    await allure.step(`Дата "Туда" равна ${startDate}`, async () => {
+    await allure.step(`Дата "Туда" равна: ${startDate}`, async () => {
       const startDateValue = await this.startDateValue.textContent();
       expect(startDateValue).toContain(startDate);
     });
@@ -140,15 +149,6 @@ export class SearchFormPage {
     await allure.step(`Дата "Обратно" равна: ${endDate}`, async () => {
       const endDateValue = await this.endDateValue.textContent();
       expect(endDateValue).toContain(endDate);
-    });
-  }
-
-  private async fillInFieldAndSelect(inputLocator: Locator, inputValue: string, prefix: string) {
-    const field = inputLocator === this.originInput ? 'Откуда' : 'Куда';
-
-    await allure.step(`Ввести в поле ${field} значение: ${inputValue}`, async () => {
-      await inputLocator.fill(inputValue);
-      await this.page.getByTestId(`${prefix}${inputValue}`).click();
     });
   }
 }

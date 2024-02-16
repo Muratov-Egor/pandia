@@ -8,7 +8,7 @@ import {IataCityCode} from "../enums/IataCityCode";
 
 import {allureTestInfo} from "../utils/AllureHelper";
 
-test('Скрыть виджет "Городов" после выбора города в виджет', async ({page}) => {
+test('Скрыть виджет "Городов" после выбора  первого города', async ({page}) => {
   await allureTestInfo({id: "8418", owner: "Egor Muratov", team: "Explore"});
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
@@ -24,7 +24,7 @@ test('Скрыть виджет "Городов" после выбора гор�
   await searchFormPage.assertThatDestinationIsEqualToExpected(cityName);
 });
 
-test('Скрыть виджет "Городов" после выбора города в модалке "Все города"', async ({page}) => {
+test('Скрыть виджет "Городов" после выбора перового города в модалке "Все города"', async ({page}) => {
   await allureTestInfo({id: "8416", owner: "Egor Muratov", team: "Explore"});
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
@@ -40,7 +40,7 @@ test('Скрыть виджет "Городов" после выбора гор�
   await searchFormPage.assertThatDestinationIsEqualToExpected(cityName);
 });
 
-test('Скрыть виджет "Гороров"  после указания города в поле "Куда"', async ({page}) => {
+test('Скрыть виджет "Городов"  после указания города в поле "Куда"', async ({page}) => {
   await allureTestInfo({id: "8417", owner: "Egor Muratov", team: "Explore"});
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
