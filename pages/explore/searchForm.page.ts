@@ -201,10 +201,8 @@ export class SearchFormPage {
 
     await allure.step(`Ввести в поле ${field} значение: ${inputValue}`, async () => {
       await inputLocator.fill(inputValue);
-      //todo тут нужно дожидаться ответа ручки v2.places.json
       const suggested = prefix.replace('*#*', inputValue);
       await this.page.locator(suggested).click();
-
     });
   }
 

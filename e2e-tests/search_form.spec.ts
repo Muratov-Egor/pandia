@@ -13,7 +13,7 @@ test('После запуска поиска на странице /search се�
   const searchFormPage = new SearchFormPage(page);
   const calendar = new CalendarPage(page);
 
-  await page.goto('/', {waitUntil: 'domcontentloaded'});
+  await page.goto('/');
   await searchFormPage.waitForSearchFormToLoad();
 
   await searchFormPage.fillInOrigin({airportIata: IataAirportCode.VKO});
@@ -23,7 +23,7 @@ test('После запуска поиска на странице /search се�
   await searchFormPage.selectNumberOfPassengerAndTripClass({adults: 3, children: 2, infant: 2, tripClass: 'C'});
   await searchFormPage.uncheckHotelCheckbox();
   await searchFormPage.startSearch();
-  await page.waitForURL('**/search/*', {waitUntil: 'domcontentloaded'});
+  await page.waitForURL('**/search/*');
 
   await searchFormPage.assertThatDirectionIsEqualToExpected('Внуково', 'Санкт-Петербург');
   await searchFormPage.assertThatStartDateIsEqualToExpected(today);
@@ -36,7 +36,7 @@ test('Открытие предварительно заполненной фо�
   await allureTestInfo({id: "9434", owner: "Egor Muratov", team: "Explore"});
 
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY, {waitUntil: 'domcontentloaded'});
+  await page.goto(MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY);
 
   await searchFormPage.assertThatDirectionIsEqualToExpected('Москва', 'Лондон');
   await searchFormPage.assertThatStartDateIsEqualToExpected(new Date('June 21'));
