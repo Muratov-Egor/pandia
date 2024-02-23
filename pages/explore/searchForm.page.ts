@@ -3,45 +3,27 @@ import {allure} from "allure-playwright";
 import {dateInSearchForm} from "../../utils/DateFormarter";
 
 export class SearchFormPage {
-  readonly page: Page;
-  readonly searchForm: Locator;
-  readonly destinationInput: Locator;
-  readonly originInput: Locator;
-  readonly formSubmitButton: Locator;
-  readonly suggestedAnywhere: Locator;
-  readonly suggestedWeekend: Locator;
-  readonly startDateInput: Locator;
-  readonly startDateValue: Locator;
-  readonly endDateValue: Locator;
-  readonly hotelCheckbox: Locator;
-  readonly passengersField: Locator;
-  readonly passengerNumbers: Locator;
-  readonly tripClass: Locator;
+  constructor(private readonly page: Page) {}
 
-  private readonly suggestedCity: string = 'xpath=//*[@data-test-id="suggested-city-*#*"]';
-  private readonly suggestedAirport: string = 'xpath=//*[@data-test-id="suggested-airport-*#*"]';
-  private readonly suggestedCountry: string = 'xpath=//*[@data-test-id="suggested-country-*#*"]';
-  private readonly numberOfPassengerBlock: string = 'xpath=//*[@data-test-id="number-of-*#*"]'
-  private readonly increaseButton: string = `${this.numberOfPassengerBlock}//*[@data-test-id="increase-button"]`;
-  private readonly tripClassInput: string = 'xpath=//*[@data-test-id="trip-class-*#*"]/parent::label'
-
-  constructor(page: Page) {
-    this.page = page;
-    this.searchForm = page.getByTestId('avia-form');
-    this.originInput = page.getByTestId('origin-input');
-    this.destinationInput = page.getByTestId('destination-input');
-    this.formSubmitButton = page.getByTestId('form-submit');
-    this.suggestedAnywhere = page.getByTestId('suggested-anywhere');
-    this.suggestedWeekend = page.getByTestId('suggested-weekend');
-    this.startDateInput = page.getByTestId('start-date-field');
-    this.startDateValue = page.getByTestId('start-date-value');
-    this.endDateValue = page.getByTestId('end-date-value');
-    this.hotelCheckbox = page.getByTestId('checkbox');
-    this.passengersField = page.getByTestId('passengers-field');
-    this.passengerNumbers = page.getByTestId('passenger-numbers');
-    this.tripClass = page.getByTestId('trip-class');
-
-  }
+  readonly searchForm = this.page.getByTestId('avia-form');
+  readonly originInput = this.page.getByTestId('origin-input');
+  readonly destinationInput = this.page.getByTestId('destination-input');
+  readonly formSubmitButton = this.page.getByTestId('form-submit');
+  readonly suggestedAnywhere = this.page.getByTestId('suggested-anywhere');
+  readonly suggestedWeekend = this.page.getByTestId('suggested-weekend');
+  readonly startDateInput = this.page.getByTestId('start-date-field');
+  readonly startDateValue = this.page.getByTestId('start-date-value');
+  readonly endDateValue = this.page.getByTestId('end-date-value');
+  readonly hotelCheckbox = this.page.getByTestId('checkbox');
+  readonly passengersField = this.page.getByTestId('passengers-field');
+  readonly passengerNumbers = this.page.getByTestId('passenger-numbers');
+  readonly tripClass = this.page.getByTestId('trip-class');
+  readonly suggestedCity = (city: string) => this.page.getByTestId(`suggested-city-${city}`);
+  readonly suggestedAirport = (airport: string) => this.page.getByTestId(`suggested-airport-${airport}`);
+  readonly suggestedCountry = (country: string) => this.page.getByTestId(`suggested-country-${country}`);
+  readonly numberOfPassengerBlock = (passengerType: string) => this.page.getByTestId(`number-of-${passengerType}`);
+  readonly increaseButton = (passengerType: string) => this.numberOfPassengerBlock(passengerType).getByTestId('increase-button');
+  readonly tripClassInput = (tripClass: string) => this.page.locator(`xpath=//*[@data-test-id="trip-class-${tripClass}"]/parent::label`)
 
   async openCalendar() {
     await allure.step('Открыть календарь', async () => {
@@ -50,14 +32,17 @@ export class SearchFormPage {
   }
 
   async fillInOrigin(param: { cityIata?: string, airportIata?: string }) {
+    //todo add allure steps
     const {cityIata, airportIata} = param;
 
     if (cityIata) {
-      await this.fillInFieldAndSelect(this.originInput, cityIata, this.suggestedCity);
+      await this.originInput.fill(cityIata);
+      await this.suggestedCity(cityIata).click();
     }
 
     if (airportIata) {
-      await this.fillInFieldAndSelect(this.originInput, airportIata, this.suggestedAirport);
+      await this.originInput.fill(airportIata);
+      await this.suggestedAirport(airportIata).click();
     }
   }
 
@@ -68,32 +53,32 @@ export class SearchFormPage {
     isAnywhere?: boolean,
     isWeekend?: boolean
   }) {
-
+    //todo add allure steps
     const {cityIata, airportIata, countryCode, isAnywhere, isWeekend} = param;
+
     if (cityIata) {
-      await this.fillInFieldAndSelect(this.destinationInput, cityIata, this.suggestedCity);
+      await this.destinationInput.fill(cityIata);
+      await this.suggestedCity(cityIata).click();
     }
 
     if (airportIata) {
-      await this.fillInFieldAndSelect(this.destinationInput, airportIata, this.suggestedAirport);
+      await this.destinationInput.fill(airportIata);
+      await this.suggestedAirport(airportIata).click();
     }
 
     if (countryCode) {
-      await this.fillInFieldAndSelect(this.destinationInput, countryCode, this.suggestedCountry);
+      await this.destinationInput.fill(countryCode);
+      await this.suggestedCountry(countryCode).click();
     }
 
     if (isAnywhere) {
-      await allure.step(`Выбрать "Куда угодно"`, async () => {
-        await this.destinationInput.fill('anywhere');
-        await this.suggestedAnywhere.click();
-      });
+      await this.destinationInput.fill('anywhere');
+      await this.suggestedAnywhere.click();
     }
 
     if (isWeekend) {
-      await allure.step(`Выбрать "Улететь на выходные"`, async () => {
-        await this.destinationInput.fill('weekend');
-        await this.suggestedWeekend.click();
-      });
+      await this.destinationInput.fill('weekend');
+      await this.suggestedWeekend.click();
     }
   }
 
@@ -120,8 +105,7 @@ export class SearchFormPage {
       }
 
       if (tripClass) {
-        const tripClassLocator = this.tripClassInput.replace('*#*', tripClass);
-        await this.page.locator(tripClassLocator).click();
+        await this.tripClassInput(tripClass).click();
       }
 
       await this.passengersField.click();
@@ -196,21 +180,10 @@ export class SearchFormPage {
     });
   }
 
-  private async fillInFieldAndSelect(inputLocator: Locator, inputValue: string, prefix: string) {
-    const field = inputLocator === this.originInput ? 'Откуда' : 'Куда';
-
-    await allure.step(`Ввести в поле ${field} значение: ${inputValue}`, async () => {
-      await inputLocator.fill(inputValue);
-      const suggested = prefix.replace('*#*', inputValue);
-      await this.page.locator(suggested).click();
-    });
-  }
-
   private async addPassenger(passengerType: string, count: number) {
     await allure.step(`Добавить ${count} пассажиров типа ${passengerType}`, async () => {
       for (let i = 0; i < count; i++) {
-        const increasePassengerTypeButton = this.increaseButton.replace('*#*', passengerType)
-        await this.page.locator(increasePassengerTypeButton).click();
+        await this.increaseButton(passengerType).click();
       }
     });
   }

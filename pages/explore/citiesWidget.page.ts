@@ -2,25 +2,15 @@ import {expect, Locator, Page} from '@playwright/test';
 import {allure} from "allure-playwright";
 
 export class CitiesWidgetPage {
-  readonly page: Page;
-  readonly cityList: Locator;
-  readonly cityCard: Locator;
-  readonly cityName: Locator;
-  readonly allCityButton: Locator;
-  readonly allCityModal: Locator;
-  readonly cityCardInModal: Locator;
-  readonly cityNameInModal: Locator;
+  constructor(private readonly page: Page) {}
 
-  constructor(page: Page) {
-    this.page = page;
-    this.cityList = page.getByTestId('city-list');
-    this.cityCard = page.getByTestId('city-card').first();
-    this.cityName = this.cityCard.getByTestId('city-name');
-    this.allCityButton = page.getByTestId('all-city-button');
-    this.allCityModal = page.getByTestId('all-cities-modal');
-    this.cityCardInModal = this.allCityModal.getByTestId('city-card').first();
-    this.cityNameInModal = this.cityCardInModal.getByTestId('city-name');
-  }
+  readonly cityList = this.page.getByTestId('city-list');
+  readonly cityCard = this.page.getByTestId('city-card').first();
+  readonly cityName = this.cityCard.getByTestId('city-name');
+  readonly allCityButton = this.page.getByTestId('all-city-button');
+  readonly allCityModal = this.page.getByTestId('all-cities-modal');
+  readonly cityCardInModal = this.allCityModal.getByTestId('city-card').first();
+  readonly cityNameInModal = this.cityCardInModal.getByTestId('city-name');
 
   async selectCity(isModal = false) {
     await allure.step('Выбрать первый город из списка', async () => {
