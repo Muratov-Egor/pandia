@@ -7,14 +7,21 @@ import {MOSCOW_NP_FLIGHT} from "../constants/explore/DirectionUrl";
 import {IataCityCode} from "../enums/IataCityCode";
 
 import {allureTestInfo} from "../utils/AllureHelper";
+import {BaseSteps} from "../pages/baseSteps.page";
+
+test.beforeEach(async ({page}) => {
+  const baseStep = new BaseSteps(page)
+  const searchFormPage = new SearchFormPage(page);
+
+  await baseStep.openPage(MOSCOW_NP_FLIGHT);
+  await searchFormPage.waitForSearchFormToLoad(true)
+});
 
 test('Скрыть виджет "Городов" после выбора  первого города', async ({page}) => {
   await allureTestInfo({id: "8418", owner: "Egor Muratov", team: "Explore"});
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_NP_FLIGHT);
-  await searchFormPage.waitForSearchFormToLoad(true)
 
   await citiesWidgetPage.assertThatCityListIsVisible();
   const cityName = await citiesWidgetPage.getCityName();
@@ -29,8 +36,6 @@ test('Скрыть виджет "Городов" после выбора пер�
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_NP_FLIGHT);
-  await searchFormPage.waitForSearchFormToLoad(true)
 
   await citiesWidgetPage.openAllCitiesModal();
   const cityName = await citiesWidgetPage.getCityName(true);
@@ -45,8 +50,6 @@ test('Скрыть виджет "Городов"  после указания г
 
   const citiesWidgetPage = new CitiesWidgetPage(page);
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_NP_FLIGHT);
-  await searchFormPage.waitForSearchFormToLoad(true)
 
   await citiesWidgetPage.assertThatCityListIsVisible();
   await searchFormPage.fillInDestination({cityIata: IataCityCode.LED});

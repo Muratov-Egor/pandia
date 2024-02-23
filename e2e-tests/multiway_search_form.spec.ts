@@ -5,15 +5,18 @@ import {firstSegment, secondSegment, thirdSegment} from "../test-data/MultiwayDi
 import {allureTestInfo} from "../utils/AllureHelper";
 import {MULTIWAY_PARAMS_MOW_IST_5JULY_IST_LON_9OCTOBER} from "../constants/explore/DirectionUrl";
 import {IataCityCode} from "../enums/IataCityCode";
+import {BaseSteps} from "../pages/baseSteps.page";
 
 test('Запуск поиска из сложной формы поиска', async ({page}) => {
   await allureTestInfo({id: "9389", owner: "Egor Muratov", team: "Explore"})
 
+  const baseStep = new BaseSteps(page)
   const searchForm = new SearchFormPage(page);
   const multiwaySearchForm = new MultiwaySearchFormPage(page);
 
-  await page.goto('/');
+  await baseStep.openPage('/');
   await searchForm.waitForSearchFormToLoad();
+
   await searchForm.switchToMultiwaySearchForm();
 
   await multiwaySearchForm.assertThatMultiwaySearchFormAppeared();
@@ -32,9 +35,10 @@ test('Запуск поиска из сложной формы поиска', as
 test('Открытие предварительно заполненной сложной формы поиска по прямой ссылке', async ({page}) => {
   await allureTestInfo({id: "9433", owner: "Egor Muratov", team: "Explore"})
 
+  const baseStep = new BaseSteps(page)
   const multiwaySearchForm = new MultiwaySearchFormPage(page);
 
-  await page.goto(MULTIWAY_PARAMS_MOW_IST_5JULY_IST_LON_9OCTOBER);
+  await baseStep.openPage(MULTIWAY_PARAMS_MOW_IST_5JULY_IST_LON_9OCTOBER);
 
   await multiwaySearchForm.assertThatMultiwaySearchFormAppeared();
   await multiwaySearchForm.assertThatSegmentIsEqualToExpected({
@@ -43,7 +47,6 @@ test('Открытие предварительно заполненной сл�
     destinationIATA: IataCityCode.IST,
     date: new Date('July 5')
   })
-
   await multiwaySearchForm.assertThatSegmentIsEqualToExpected({
     segmentNumber: 2,
     originIATA: IataCityCode.IST,

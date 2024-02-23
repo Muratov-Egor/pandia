@@ -6,14 +6,16 @@ import {IataAirportCode} from "../enums/IataAirportCode";
 import {IataCityCode} from "../enums/IataCityCode";
 import {nextWeek, today} from "../utils/GetDate";
 import {MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY} from "../constants/explore/DirectionUrl";
+import {BaseSteps} from "../pages/baseSteps.page";
 
 test('После запуска поиска на странице /search серчфома остается заполненной', async ({page}) => {
   await allureTestInfo({id: "9435", owner: "Egor Muratov", team: "Explore"});
 
+  const baseStep = new BaseSteps(page)
   const searchFormPage = new SearchFormPage(page);
   const calendar = new CalendarPage(page);
 
-  await page.goto('/');
+  await baseStep.openPage('/');
   await searchFormPage.waitForSearchFormToLoad();
 
   await searchFormPage.fillInOrigin({airportIata: IataAirportCode.VKO});
@@ -35,8 +37,10 @@ test('После запуска поиска на странице /search се�
 test('Открытие предварительно заполненной формы поиска по прямой ссылке', async ({page}) => {
   await allureTestInfo({id: "9434", owner: "Egor Muratov", team: "Explore"});
 
+  const baseStep = new BaseSteps(page)
   const searchFormPage = new SearchFormPage(page);
-  await page.goto(MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY);
+
+  await baseStep.openPage(MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY);
 
   await searchFormPage.assertThatDirectionIsEqualToExpected('Москва', 'Лондон');
   await searchFormPage.assertThatStartDateIsEqualToExpected(new Date('June 21'));
