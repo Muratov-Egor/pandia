@@ -32,17 +32,20 @@ export class SearchFormPage {
   }
 
   async fillInOrigin(param: { cityIata?: string, airportIata?: string }) {
-    //todo add allure steps
     const {cityIata, airportIata} = param;
 
     if (cityIata) {
-      await this.originInput.fill(cityIata);
-      await this.suggestedCity(cityIata).click();
+      await allure.step(`Ввести в поле "Откуда" значение: ${cityIata}`, async () => {
+        await this.originInput.fill(cityIata);
+        await this.suggestedCity(cityIata).click();
+      });
     }
 
     if (airportIata) {
-      await this.originInput.fill(airportIata);
-      await this.suggestedAirport(airportIata).click();
+      await allure.step(`Ввести в поле "Откуда" значение: ${airportIata}`, async () => {
+        await this.originInput.fill(airportIata);
+        await this.suggestedAirport(airportIata).click();
+      });
     }
   }
 
@@ -53,32 +56,41 @@ export class SearchFormPage {
     isAnywhere?: boolean,
     isWeekend?: boolean
   }) {
-    //todo add allure steps
     const {cityIata, airportIata, countryCode, isAnywhere, isWeekend} = param;
 
     if (cityIata) {
-      await this.destinationInput.fill(cityIata);
-      await this.suggestedCity(cityIata).click();
+      await allure.step(`Ввести в поле "Куда" значение: ${cityIata}`, async () => {
+        await this.destinationInput.fill(cityIata);
+        await this.suggestedCity(cityIata).click();
+      });
     }
 
     if (airportIata) {
-      await this.destinationInput.fill(airportIata);
-      await this.suggestedAirport(airportIata).click();
+      await allure.step(`Ввести в поле "Куда" значение: ${airportIata}`, async () => {
+        await this.destinationInput.fill(airportIata);
+        await this.suggestedAirport(airportIata).click();
+      });
     }
 
     if (countryCode) {
-      await this.destinationInput.fill(countryCode);
-      await this.suggestedCountry(countryCode).click();
+      await allure.step(`Ввести в поле "Куда" значение: ${countryCode}`, async () => {
+        await this.destinationInput.fill(countryCode);
+        await this.suggestedCountry(countryCode).click();
+      });
     }
 
     if (isAnywhere) {
-      await this.destinationInput.fill('anywhere');
-      await this.suggestedAnywhere.click();
+      await allure.step('Ввести в поле "Куда" значение: "Куда угодно"', async () => {
+        await this.destinationInput.fill('anywhere');
+        await this.suggestedAnywhere.click();
+      });
     }
 
     if (isWeekend) {
-      await this.destinationInput.fill('weekend');
-      await this.suggestedWeekend.click();
+      await allure.step('Ввести в поле "Куда" значение: "Выходные"', async () => {
+        await this.destinationInput.fill('weekend');
+        await this.suggestedWeekend.click();
+      });
     }
   }
 
