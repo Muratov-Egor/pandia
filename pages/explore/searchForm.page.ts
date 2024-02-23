@@ -1,4 +1,4 @@
-import {expect, Locator, Page} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 import {allure} from "allure-playwright";
 import {dateInSearchForm} from "../../utils/DateFormarter";
 
@@ -18,6 +18,7 @@ export class SearchFormPage {
   readonly passengersField = this.page.getByTestId('passengers-field');
   readonly passengerNumbers = this.page.getByTestId('passenger-numbers');
   readonly tripClass = this.page.getByTestId('trip-class');
+  readonly multiwaySearchFormButton = this.page.getByTestId('switch-to-multiwayform');
   readonly suggestedCity = (city: string) => this.page.getByTestId(`suggested-city-${city}`);
   readonly suggestedAirport = (airport: string) => this.page.getByTestId(`suggested-airport-${airport}`);
   readonly suggestedCountry = (country: string) => this.page.getByTestId(`suggested-country-${country}`);
@@ -197,6 +198,12 @@ export class SearchFormPage {
       for (let i = 0; i < count; i++) {
         await this.increaseButton(passengerType).click();
       }
+    });
+  }
+
+  async switchToMultiwaySearchForm() {
+    await allure.step('Переключиться на форму сложного поиска', async () => {
+      await this.multiwaySearchFormButton.click();
     });
   }
 }
