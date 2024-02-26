@@ -43,3 +43,4 @@ yarn install
 
 ## Документация
 - [Как писать тесты](docs/how-to-write-tests.md)
+- [Allure](docs/allure.md)
