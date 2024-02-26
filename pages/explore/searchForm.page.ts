@@ -1,39 +1,30 @@
-import {expect, Locator, Page} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 import {allure} from "allure-playwright";
 import {dateInSearchForm} from "../../utils/DateFormarter";
 
 export class SearchFormPage {
-  readonly page: Page;
-  readonly searchForm: Locator;
-  readonly destinationInput: Locator;
-  readonly originInput: Locator;
-  readonly formSubmitButton: Locator;
-  readonly suggestedAnywhere: Locator;
-  readonly suggestedWeekend: Locator;
-  readonly startDateInput: Locator;
-  readonly startDateValue: Locator;
-  readonly endDateValue: Locator;
-  readonly hotelCheckbox: Locator;
-  readonly passengerNumbers: Locator;
+  constructor(private readonly page: Page) {}
 
-  private readonly suggestedCityPrefix: string = 'suggested-city-';
-  private readonly suggestedAirportPrefix: string = 'suggested-airport-';
-  private readonly suggestedCountryPrefix: string = 'suggested-country-';
-
-  constructor(page: Page) {
-    this.page = page;
-    this.searchForm = page.getByTestId('avia-form');
-    this.originInput = page.getByTestId('origin-input');
-    this.destinationInput = page.getByTestId('destination-input');
-    this.formSubmitButton = page.getByTestId('form-submit');
-    this.suggestedAnywhere = page.getByTestId('suggested-anywhere');
-    this.suggestedWeekend = page.getByTestId('suggested-weekend');
-    this.startDateInput = page.getByTestId('start-date-field');
-    this.startDateValue = page.getByTestId('start-date-value');
-    this.endDateValue = page.getByTestId('end-date-value');
-    this.hotelCheckbox = page.getByTestId('checkbox');
-    this.passengerNumbers = page.getByTestId('passenger-numbers');
-  }
+  readonly searchForm = this.page.getByTestId('avia-form');
+  readonly originInput = this.page.getByTestId('origin-input');
+  readonly destinationInput = this.page.getByTestId('destination-input');
+  readonly formSubmitButton = this.page.getByTestId('form-submit');
+  readonly suggestedAnywhere = this.page.getByTestId('suggested-anywhere');
+  readonly suggestedWeekend = this.page.getByTestId('suggested-weekend');
+  readonly startDateInput = this.page.getByTestId('start-date-field');
+  readonly startDateValue = this.page.getByTestId('start-date-value');
+  readonly endDateValue = this.page.getByTestId('end-date-value');
+  readonly hotelCheckbox = this.page.getByTestId('checkbox');
+  readonly passengersField = this.page.getByTestId('passengers-field');
+  readonly passengerNumbers = this.page.getByTestId('passenger-numbers');
+  readonly tripClass = this.page.getByTestId('trip-class');
+  readonly multiwaySearchFormButton = this.page.getByTestId('switch-to-multiwayform');
+  readonly suggestedCity = (city: string) => this.page.getByTestId(`suggested-city-${city}`);
+  readonly suggestedAirport = (airport: string) => this.page.getByTestId(`suggested-airport-${airport}`);
+  readonly suggestedCountry = (country: string) => this.page.getByTestId(`suggested-country-${country}`);
+  readonly numberOfPassengerBlock = (passengerType: string) => this.page.getByTestId(`number-of-${passengerType}`);
+  readonly increaseButton = (passengerType: string) => this.numberOfPassengerBlock(passengerType).getByTestId('increase-button');
+  readonly tripClassInput = (tripClass: string) => this.page.locator(`xpath=//*[@data-test-id="trip-class-${tripClass}"]/parent::label`)
 
   async openCalendar() {
     await allure.step('Открыть календарь', async () => {
@@ -45,11 +36,17 @@ export class SearchFormPage {
     const {cityIata, airportIata} = param;
 
     if (cityIata) {
-      await this.fillInFieldAndSelect(this.originInput, cityIata, this.suggestedCityPrefix);
+      await allure.step(`Ввести в поле "Откуда" значение: ${cityIata}`, async () => {
+        await this.originInput.fill(cityIata);
+        await this.suggestedCity(cityIata).click();
+      });
     }
 
     if (airportIata) {
-      await this.fillInFieldAndSelect(this.originInput, airportIata, this.suggestedAirportPrefix);
+      await allure.step(`Ввести в поле "Откуда" значение: ${airportIata}`, async () => {
+        await this.originInput.fill(airportIata);
+        await this.suggestedAirport(airportIata).click();
+      });
     }
   }
 
@@ -60,33 +57,72 @@ export class SearchFormPage {
     isAnywhere?: boolean,
     isWeekend?: boolean
   }) {
-
     const {cityIata, airportIata, countryCode, isAnywhere, isWeekend} = param;
+
     if (cityIata) {
-      await this.fillInFieldAndSelect(this.destinationInput, cityIata, this.suggestedCityPrefix);
+      await allure.step(`Ввести в поле "Куда" значение: ${cityIata}`, async () => {
+        await this.destinationInput.fill(cityIata);
+        await this.suggestedCity(cityIata).click();
+      });
     }
 
     if (airportIata) {
-      await this.fillInFieldAndSelect(this.destinationInput, airportIata, this.suggestedAirportPrefix);
+      await allure.step(`Ввести в поле "Куда" значение: ${airportIata}`, async () => {
+        await this.destinationInput.fill(airportIata);
+        await this.suggestedAirport(airportIata).click();
+      });
     }
 
     if (countryCode) {
-      await this.fillInFieldAndSelect(this.destinationInput, countryCode, this.suggestedCountryPrefix);
+      await allure.step(`Ввести в поле "Куда" значение: ${countryCode}`, async () => {
+        await this.destinationInput.fill(countryCode);
+        await this.suggestedCountry(countryCode).click();
+      });
     }
 
     if (isAnywhere) {
-      await allure.step(`Выбрать "Куда угодно"`, async () => {
+      await allure.step('Ввести в поле "Куда" значение: "Куда угодно"', async () => {
         await this.destinationInput.fill('anywhere');
         await this.suggestedAnywhere.click();
       });
     }
 
     if (isWeekend) {
-      await allure.step(`Выбрать "Улететь на выходные"`, async () => {
+      await allure.step('Ввести в поле "Куда" значение: "Выходные"', async () => {
         await this.destinationInput.fill('weekend');
         await this.suggestedWeekend.click();
       });
     }
+  }
+
+  async selectNumberOfPassengerAndTripClass(param: {
+    children: number;
+    adults: number;
+    infant: number,
+    tripClass: string
+  }) {
+    const {adults, children, infant, tripClass} = param;
+    await allure.step(`Выбрать количество пассажиров: взрослых - ${adults}, детей - ${children}, младенцев - ${infant}, класс - ${tripClass}`, async () => {
+      await this.passengersField.click();
+
+      if (adults) {
+        await this.addPassenger('adults', adults - 1);
+      }
+
+      if (children) {
+        await this.addPassenger('children', children);
+      }
+
+      if (infant) {
+        await this.addPassenger('infants', infant);
+      }
+
+      if (tripClass) {
+        await this.tripClassInput(tripClass).click();
+      }
+
+      await this.passengersField.click();
+    });
   }
 
   async waitForSearchFormToLoad(isDestination: boolean = false) {
@@ -102,7 +138,7 @@ export class SearchFormPage {
   }
 
   async assertThatDestinationIsEqualToExpected(expectedDestination: string) {
-    await allure.step(`Assert that destination is equal to ${expectedDestination}`, async () => {
+    await allure.step(`В поле "Куда" указано: ${expectedDestination}`, async () => {
       const destinationInputValue = await this.destinationInput.getAttribute('value');
       expect(destinationInputValue).toEqual(expectedDestination);
     });
@@ -121,7 +157,7 @@ export class SearchFormPage {
   }
 
   async assertThatDirectionIsEqualToExpected(origin: string, destination: string) {
-    await allure.step(`В поле "Откуда" введно: ${origin}, а в поле "Куда" введено: ${destination}`, async () => {
+    await allure.step(`В поле "Откуда" указано: ${origin}, а в поле "Куда" указано: ${destination}`, async () => {
       await expect(this.originInput).toHaveValue(origin);
       await expect(this.destinationInput).toHaveValue(destination);
     });
@@ -129,7 +165,7 @@ export class SearchFormPage {
 
   async assertThatStartDateIsEqualToExpected(date: Date) {
     const startDate = dateInSearchForm(date)
-    await allure.step(`Дата "Туда" равна ${startDate}`, async () => {
+    await allure.step(`Дата "Туда" равна: ${startDate}`, async () => {
       const startDateValue = await this.startDateValue.textContent();
       expect(startDateValue).toContain(startDate);
     });
@@ -143,12 +179,31 @@ export class SearchFormPage {
     });
   }
 
-  private async fillInFieldAndSelect(inputLocator: Locator, inputValue: string, prefix: string) {
-    const field = inputLocator === this.originInput ? 'Откуда' : 'Куда';
+  async assertThatNumberOfPassengersIsEqualToExpected(number: number) {
+    await allure.step(`Количество пассажиров равно: ${number}`, async () => {
+      const passengerNumbers = parseInt(await this.passengerNumbers.textContent());
+      expect(passengerNumbers).toEqual(number);
+    });
+  }
 
-    await allure.step(`Ввести в поле ${field} значение: ${inputValue}`, async () => {
-      await inputLocator.fill(inputValue);
-      await this.page.getByTestId(`${prefix}${inputValue}`).click();
+  async assertThatTripClassIsEqualToExpected(expectedTripClass: string) {
+    await allure.step(`Класс перелета равен: ${expectedTripClass}`, async () => {
+      const tripClass = await this.tripClass.textContent();
+      expect(tripClass).toEqual(expectedTripClass);
+    });
+  }
+
+  private async addPassenger(passengerType: string, count: number) {
+    await allure.step(`Добавить ${count} пассажиров типа ${passengerType}`, async () => {
+      for (let i = 0; i < count; i++) {
+        await this.increaseButton(passengerType).click();
+      }
+    });
+  }
+
+  async switchToMultiwaySearchForm() {
+    await allure.step('Переключиться на форму сложного поиска', async () => {
+      await this.multiwaySearchFormButton.click();
     });
   }
 }

@@ -1,23 +1,17 @@
-import {Locator, Page} from "@playwright/test";
+import {Page} from "@playwright/test";
 import {dateInCalendarFormat} from "../../utils/DateFormarter";
 import {allure} from "allure-playwright";
 
 export class CalendarPage {
-  readonly page: Page;
-  readonly calendarActionButton: Locator;
+  constructor(private readonly page: Page) {}
 
-  private readonly date: string = 'date-';
-
-  constructor(page: Page) {
-    this.page = page;
-    this.calendarActionButton = page.getByTestId('calendar-action-button');
-  }
+  readonly date = (date: string) => this.page.getByTestId(`date-${date}`)
+  readonly calendarActionButton = this.page.getByTestId('calendar-action-button');
 
   async selectTripDurationDates(startDate: Date, endDate?: Date) {
     await allure.step(`Выбор даты вылета`, async () => {
       await this.chooseDate(startDate);
     });
-
 
     if (endDate) {
       await allure.step(`Выбор даты возвращения`, async () => {
@@ -34,8 +28,8 @@ export class CalendarPage {
     const dateInCalendar = dateInCalendarFormat(date);
 
     await allure.step(`Выбрать дату ${dateInCalendar}`, async () => {
-      await this.page.getByTestId(this.date + dateInCalendar).hover();
-      await this.page.getByTestId(this.date + dateInCalendar).click()
+      await this.date(dateInCalendar).hover();
+      await this.date(dateInCalendar).click();
     });
   }
 }
