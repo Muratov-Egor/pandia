@@ -19,6 +19,9 @@ export class SearchFormPage {
   readonly passengerNumbers = this.page.getByTestId('passenger-numbers');
   readonly tripClass = this.page.getByTestId('trip-class');
   readonly multiwaySearchFormButton = this.page.getByTestId('switch-to-multiwayform');
+
+  readonly originIata = this.page.locator(`xpath=//*[@data-test-id="origin-input"]/following-sibling::*[@data-test-id="iata"]`)
+  readonly destinationIata = this.page.locator(`xpath=//*[@data-test-id="destination-input"]/following-sibling::*[@data-test-id="iata"]`)
   readonly suggestedCity = (city: string) => this.page.getByTestId(`suggested-city-${city}`);
   readonly suggestedAirport = (airport: string) => this.page.getByTestId(`suggested-airport-${airport}`);
   readonly suggestedCountry = (country: string) => this.page.getByTestId(`suggested-country-${country}`);
@@ -158,8 +161,8 @@ export class SearchFormPage {
 
   async assertThatDirectionIsEqualToExpected(origin: string, destination: string) {
     await allure.step(`В поле "Откуда" указано: ${origin}, а в поле "Куда" указано: ${destination}`, async () => {
-      await expect(this.originInput).toHaveValue(origin);
-      await expect(this.destinationInput).toHaveValue(destination);
+      await expect(this.originIata).toHaveText(origin);
+      await expect(this.destinationIata).toHaveText(destination);
     });
   }
 
