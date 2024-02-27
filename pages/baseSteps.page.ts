@@ -9,4 +9,15 @@ export class BaseSteps {
       await this.page.goto(url);
     });
   }
+
+  async overrideFrontEndFlagr({flagName, flagOptions, isFirstQueryParam = true}: {
+    flagName: string,
+    flagOptions?: object,
+    isFirstQueryParam?: boolean
+  }) {
+
+    const overrideFlag = isFirstQueryParam ? `?ffv2_overrides=` : `&ffv2_overrides=`
+
+    return `${overrideFlag}{"${flagName}":${JSON.stringify(flagOptions)}}`
+  }
 }
