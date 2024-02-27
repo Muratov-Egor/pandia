@@ -22,13 +22,12 @@ export default defineConfig({
   workers: process.env.CI ? 3 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: [
-      ["line"],
       [
         "allure-playwright",
         {
           detail: false,
           outputFolder: "allure-results",
-          suiteTitle: true,
+          suiteTitle: false,
         },
       ],
     ],

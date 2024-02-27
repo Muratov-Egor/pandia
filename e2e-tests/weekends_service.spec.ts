@@ -19,71 +19,72 @@ const optionsFlexConfig = {
   }
 }
 
-test('Открытие сервисы "На выходные" по прямой ссылке', async ({page}) => {
-  await allureTestInfo({id: "10567", owner: "Egor Muratov", team: "Explore"});
+test.describe('Сервис выходных', () => {
+  test('Открытие сервисы "На выходные" по прямой ссылке', async ({page}) => {
+    await allureTestInfo({id: "10567", owner: "Egor Muratov", team: "Explore"});
 
-  const baseStep = new BaseSteps(page)
-  const searchForm = new SearchFormPage(page);
-  const calendar = new CalendarPage(page);
-  const weekendsService = new WeekendsServicePage(page);
+    const baseStep = new BaseSteps(page)
+    const searchForm = new SearchFormPage(page);
+    const calendar = new CalendarPage(page);
+    const weekendsService = new WeekendsServicePage(page);
 
-  const flexConfig = await baseStep.overrideFrontEndFlagr({
-    flagName: FLEXIBLE_CALENDAR_CONFIG,
-    flagOptions: optionsFlexConfig,
-    isFirstQueryParam: false
+    const flexConfig = await baseStep.overrideFrontEndFlagr({
+      flagName: FLEXIBLE_CALENDAR_CONFIG,
+      flagOptions: optionsFlexConfig,
+      isFirstQueryParam: false
+    })
+
+    await baseStep.openPage(WEEKENDS_SERVICE + flexConfig)
+    await searchForm.waitForSearchFormToLoad(true)
+
+    await searchForm.openCalendar()
+    await calendar.selectAllWeekends()
+    await weekendsService.assertThatWeekendsCityListIsVisible()
   })
 
-  await baseStep.openPage(WEEKENDS_SERVICE + flexConfig)
-  await searchForm.waitForSearchFormToLoad(true)
+  test('Переход на страницу города из сервиса "На выходные"', async ({page}) => {
+    await allureTestInfo({id: "10568", owner: "Egor Muratov", team: "Explore"});
 
-  await searchForm.openCalendar()
-  await calendar.selectAllWeekends()
-  await weekendsService.assertThatWeekendsCityListIsVisible()
-})
+    const baseStep = new BaseSteps(page)
+    const searchForm = new SearchFormPage(page);
+    const weekendsService = new WeekendsServicePage(page);
+    const weekendsWidget = new WeekendsPricesWidget(page);
 
+    const flexConfig = await baseStep.overrideFrontEndFlagr({
+      flagName: FLEXIBLE_CALENDAR_CONFIG,
+      flagOptions: optionsFlexConfig,
+      isFirstQueryParam: false
+    })
 
-test('Переход на страницу города из сервиса "На выходные"', async ({page}) => {
-  await allureTestInfo({id: "10568", owner: "Egor Muratov", team: "Explore"});
+    await baseStep.openPage(ORIGIN_IS_MOSCOW + flexConfig)
+    await searchForm.waitForSearchFormToLoad()
 
-  const baseStep = new BaseSteps(page)
-  const searchForm = new SearchFormPage(page);
-  const weekendsService = new WeekendsServicePage(page);
-  const weekendsWidget = new WeekendsPricesWidget(page);
+    await searchForm.fillInDestination({isWeekend: true})
+    const firstCityName = await weekendsService.getFirstCityName()
+    await weekendsService.selectFirstCity()
 
-  const flexConfig = await baseStep.overrideFrontEndFlagr({
-    flagName: FLEXIBLE_CALENDAR_CONFIG,
-    flagOptions: optionsFlexConfig,
-    isFirstQueryParam: false
+    await searchForm.assertThatDestinationIsEqualToExpected(firstCityName)
+    await weekendsService.assertThatWeekendsCityListIsNotVisible()
+    await weekendsWidget.assertThatWidgetIsVisible()
+
+  });
+
+  test('Переход в сервис "На выходные" с блока "На Выходные" на главном экране"', async ({page}) => {
+    await allureTestInfo({id: "10525", owner: "Egor Muratov", team: "Explore"});
+
+    const baseStep = new BaseSteps(page)
+    const mainPageWidget = new MainPageWidgetPage(page);
+    const weekendsService = new WeekendsServicePage(page);
+
+    const flexConfig = await baseStep.overrideFrontEndFlagr({
+      flagName: FLEXIBLE_CALENDAR_CONFIG,
+      flagOptions: optionsFlexConfig,
+      isFirstQueryParam: false
+    })
+
+    await baseStep.openPage(ORIGIN_IS_MOSCOW + flexConfig)
+
+    await mainPageWidget.goToWeekendsService()
+    await weekendsService.assertThatWeekendsCityListIsVisible()
   })
-
-  await baseStep.openPage(ORIGIN_IS_MOSCOW + flexConfig)
-  await searchForm.waitForSearchFormToLoad()
-
-  await searchForm.fillInDestination({isWeekend: true})
-  const firstCityName = await weekendsService.getFirstCityName()
-  await weekendsService.selectFirstCity()
-
-  await searchForm.assertThatDestinationIsEqualToExpected(firstCityName)
-  await weekendsService.assertThatWeekendsCityListIsNotVisible()
-  await weekendsWidget.assertThatWidgetIsVisible()
-
 });
-
-test('Переход в сервис "На выходные" с блока "На Выходные" на главном экране"', async ({page}) => {
-  await allureTestInfo({id: "10525", owner: "Egor Muratov", team: "Explore"});
-
-  const baseStep = new BaseSteps(page)
-  const mainPageWidget = new MainPageWidgetPage(page);
-  const weekendsService = new WeekendsServicePage(page);
-
-  const flexConfig = await baseStep.overrideFrontEndFlagr({
-    flagName: FLEXIBLE_CALENDAR_CONFIG,
-    flagOptions: optionsFlexConfig,
-    isFirstQueryParam: false
-  })
-
-  await baseStep.openPage(ORIGIN_IS_MOSCOW + flexConfig)
-
-  await mainPageWidget.goToWeekendsService()
-  await weekendsService.assertThatWeekendsCityListIsVisible()
-})
