@@ -27,7 +27,7 @@ test('После запуска поиска на странице /search се�
   await searchFormPage.startSearch();
   await page.waitForURL('**/search/*');
 
-  await searchFormPage.assertThatDirectionIsEqualToExpected('Внуково', 'Санкт-Петербург');
+  await searchFormPage.assertThatDirectionIsEqualToExpected(IataAirportCode.VKO, IataCityCode.LED);
   await searchFormPage.assertThatStartDateIsEqualToExpected(today);
   await searchFormPage.assertThatEndDateIsEqualToExpected(nextWeek);
   await searchFormPage.assertThatNumberOfPassengersIsEqualToExpected(7)
@@ -42,7 +42,7 @@ test('Открытие предварительно заполненной фо�
 
   await baseStep.openPage(MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY);
 
-  await searchFormPage.assertThatDirectionIsEqualToExpected('Москва', 'Лондон');
+  await searchFormPage.assertThatDirectionIsEqualToExpected(IataCityCode.MOW, IataCityCode.LON);
   await searchFormPage.assertThatStartDateIsEqualToExpected(new Date('June 21'));
   await searchFormPage.assertThatEndDateIsEqualToExpected(new Date('July 17'));
 });
