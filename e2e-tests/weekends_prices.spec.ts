@@ -32,6 +32,7 @@ test.beforeEach('Включите флаг гибкого календаря и 
 test('Переход на страницу выдачи /search, при нажатии на мин. прайс', async ({context, page}) => {
   await allureTestInfo({id: "10565", owner: "Egor Muratov", team: "Explore"});
 
+
   const searchForm = new SearchFormPage(page);
   const calendar = new CalendarPage(page);
   const weekendsPricesWidget = new WeekendsPricesWidget(page);
@@ -46,7 +47,8 @@ test('Переход на страницу выдачи /search, при нажа
     context.waitForEvent('page'),
   ])
 
-  await newPage.waitForURL('**/search/*')
+  const baseStep = new BaseSteps(newPage)
+  await baseStep.waitForUrl('**/search/*');
   const searchFormOnResultsPage = new SearchFormPage(newPage);
   await searchFormOnResultsPage.assertThatDirectionIsEqualToExpected(origin, destination)
   await searchFormOnResultsPage.assertThatStartDateIsEqualToExpected(startDate)

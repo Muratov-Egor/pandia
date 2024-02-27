@@ -26,7 +26,7 @@ test('Запуск поиска из сложной формы поиска', as
   await multiwaySearchForm.fillInSegment(thirdSegment)
   await multiwaySearchForm.startSearch();
 
-  await page.waitForURL('**/search/*');
+  await baseStep.waitForUrl('**/search/*');
   await multiwaySearchForm.assertThatCollapsedFormSegmentIsEqualToExpected(firstSegment);
   await multiwaySearchForm.assertThatCollapsedFormSegmentIsEqualToExpected(secondSegment);
   await multiwaySearchForm.assertThatCollapsedFormSegmentIsEqualToExpected(thirdSegment);

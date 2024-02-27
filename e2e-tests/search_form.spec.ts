@@ -25,8 +25,8 @@ test('После запуска поиска на странице /search се�
   await searchFormPage.selectNumberOfPassengerAndTripClass({adults: 3, children: 2, infant: 2, tripClass: 'C'});
   await searchFormPage.uncheckHotelCheckbox();
   await searchFormPage.startSearch();
-  await page.waitForURL('**/search/*');
 
+  await baseStep.waitForUrl('**/search/*');
   await searchFormPage.assertThatDirectionIsEqualToExpected(IataAirportCode.VKO, IataCityCode.LED);
   await searchFormPage.assertThatStartDateIsEqualToExpected(today);
   await searchFormPage.assertThatEndDateIsEqualToExpected(nextWeek);
