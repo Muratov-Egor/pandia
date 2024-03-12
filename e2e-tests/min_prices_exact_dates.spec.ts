@@ -9,7 +9,7 @@ import {ExactMinPricesWidgetPage} from "../pages/explore/exactMinPricesWidget.pa
 import {IataCityCode} from "../enums/IataCityCode";
 
 test.describe('Тесты виджета "Лучшие цены" при выбранных точных датах', () => {
-  test.beforeEach('Окрыть страницу направления и снять отельную галку', async ({page, context}) => {
+  test.beforeEach('Открыть страницу направления', async ({page, context}) => {
     const baseStep = new BaseSteps(page);
     const searchForm = new SearchFormPage(page);
 
