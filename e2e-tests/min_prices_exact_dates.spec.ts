@@ -7,6 +7,8 @@ import {CalendarPage} from "../pages/explore/calendar.page";
 import {nextWeek, tomorrow} from "../utils/GetDate";
 import {ExactMinPricesWidgetPage} from "../pages/explore/exactMinPricesWidget.page";
 import {IataCityCode} from "../enums/IataCityCode";
+import {ARIADNE_GRAPHQL_ROUTE, BEST_PRICES_OPERATION_NAME} from "../constants/Ariadne";
+import {BEST_PRICES_STAB} from "../fixtures/explore/best_prices_stub";
 
 test.describe('Тесты виджета "Лучшие цены" при выбранных точных датах', () => {
   test.beforeEach('Открыть страницу направления', async ({page, context}) => {
@@ -59,5 +61,24 @@ test.describe('Тесты виджета "Лучшие цены" при выбр
     await baseStep.waitForUrl('**/search/*');
     await searchFormOnResultsPage.assertThatDirectionIsEqualToExpected(IataCityCode.MOW, IataCityCode.BKK)
     await searchFormOnResultsPage.assertThatStartDateIsEqualToExpected(tomorrow)
+  })
+
+  test('Переход на страницу /search из заглушки "Нет билетов"', async ({page}) => {
+    await allureTestInfo({id: "9853", owner: "Egor Muratov", team: "Explore"});
+
+    const baseStep = new BaseSteps(page);
+    const searchForm = new SearchFormPage(page);
+    const calendar = new CalendarPage(page);
+    const exactMinPrices = new ExactMinPricesWidgetPage(page);
+
+    await baseStep.mockGraphQlResponse(ARIADNE_GRAPHQL_ROUTE, BEST_PRICES_OPERATION_NAME, BEST_PRICES_STAB)
+
+    await searchForm.openCalendar()
+    await calendar.selectTripDurationDates(tomorrow)
+    await exactMinPrices.startSearchFromStub()
+
+    await searchForm.waitForSearchFormToLoad(true)
+    await searchForm.assertThatDirectionIsEqualToExpected(IataCityCode.MOW, IataCityCode.BKK)
+    await searchForm.assertThatStartDateIsEqualToExpected(tomorrow)
   })
 });

@@ -27,4 +27,18 @@ export class BaseSteps {
       await this.page.waitForURL(url, {waitUntil: "domcontentloaded", timeout: 50000});
     });
   }
+
+  async mockGraphQlResponse(url: string, operationName: string, newBody: object = {}) {
+    await this.page.route(url, route => {
+      const body = route.request().postDataJSON()
+
+      if (body.operation_name === operationName) {
+        route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify(newBody)
+        })
+      }
+    })
+  }
 }
