@@ -20,13 +20,35 @@ test.describe('Тесты виджета "Лучшие цены" при выбр
   test('Переход на страницу /search при нажатии на кнопку Показать все билеты', async ({context, page}) => {
     await allureTestInfo({id: "9847", owner: "Egor Muratov", team: "Explore"});
 
+    const baseStep = new BaseSteps(page);
     const searchForm = new SearchFormPage(page);
     const calendar = new CalendarPage(page);
     const exactMinPrices = new ExactMinPricesWidgetPage(page);
 
     await searchForm.openCalendar()
     await calendar.selectTripDurationDates(tomorrow, nextWeek)
+    await searchForm.uncheckHotelCheckbox()
     await exactMinPrices.showAllTickets()
+
+
+
+
+    await baseStep.waitForUrl('**/search/*');
+    await searchForm.assertThatDirectionIsEqualToExpected(IataCityCode.MOW, IataCityCode.BKK)
+    await searchForm.assertThatStartDateIsEqualToExpected(tomorrow)
+    await searchForm.assertThatEndDateIsEqualToExpected(nextWeek)
+  })
+
+  test('Переход на страницу /search при клике по мин прайсу', async ({context, page}) => {
+    await allureTestInfo({id: "9851", owner: "Egor Muratov", team: "Explore"});
+
+    const searchForm = new SearchFormPage(page);
+    const calendar = new CalendarPage(page);
+    const exactMinPrices = new ExactMinPricesWidgetPage(page);
+
+    await searchForm.openCalendar()
+    await calendar.selectTripDurationDates(tomorrow)
+    await exactMinPrices.chooseFirstPrice()
 
     const [newPage] = await Promise.all([
       context.waitForEvent('page'),
@@ -37,6 +59,5 @@ test.describe('Тесты виджета "Лучшие цены" при выбр
     await baseStep.waitForUrl('**/search/*');
     await searchFormOnResultsPage.assertThatDirectionIsEqualToExpected(IataCityCode.MOW, IataCityCode.BKK)
     await searchFormOnResultsPage.assertThatStartDateIsEqualToExpected(tomorrow)
-    await searchFormOnResultsPage.assertThatEndDateIsEqualToExpected(nextWeek)
   })
 });
