@@ -10,7 +10,7 @@ import {IataCityCode} from "../enums/IataCityCode";
 import {ARIADNE_GRAPHQL_ROUTE, BEST_PRICES_OPERATION_NAME} from "../constants/Ariadne";
 import {BEST_PRICES_STAB} from "../fixtures/explore/best_prices_stub";
 
-test.describe('Тесты виджета "Лучшие цены" при выбранных точных датах', () => {
+test.describe('Виджет "Лучшие цены" при выбранных точных датах', () => {
   test.beforeEach('Открыть страницу направления', async ({page, context}) => {
     const baseStep = new BaseSteps(page);
     const searchForm = new SearchFormPage(page);

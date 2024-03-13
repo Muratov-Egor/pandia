@@ -5,7 +5,7 @@ import {PopularDirectionsSEOWidgetPage} from "../pages/explore/popularDirections
 import {MOSCOW_BANGKOK_FLIGHT} from "../constants/explore/DirectionUrl";
 import {SearchFormPage} from "../pages/explore/searchForm.page";
 
-test.describe('Тесты SEO блока "Популярные направления"', () => {
+test.describe('SEO блок "Популярные направления"', () => {
   test('Блок "Популярные направления" отображается на главной странице', async ({page}) => {
     await allureTestInfo({id: "9202", owner: "Egor Muratov", team: "Explore"});
 
