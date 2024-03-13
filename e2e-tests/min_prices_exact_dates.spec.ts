@@ -32,9 +32,6 @@ test.describe('Тесты виджета "Лучшие цены" при выбр
     await searchForm.uncheckHotelCheckbox()
     await exactMinPrices.showAllTickets()
 
-
-
-
     await baseStep.waitForUrl('**/search/*');
     await searchForm.assertThatDirectionIsEqualToExpected(IataCityCode.MOW, IataCityCode.BKK)
     await searchForm.assertThatStartDateIsEqualToExpected(tomorrow)
@@ -55,9 +52,9 @@ test.describe('Тесты виджета "Лучшие цены" при выбр
     const [newPage] = await Promise.all([
       context.waitForEvent('page'),
     ])
-
     const baseStep = new BaseSteps(newPage);
     const searchFormOnResultsPage = new SearchFormPage(newPage);
+
     await baseStep.waitForUrl('**/search/*');
     await searchFormOnResultsPage.assertThatDirectionIsEqualToExpected(IataCityCode.MOW, IataCityCode.BKK)
     await searchFormOnResultsPage.assertThatStartDateIsEqualToExpected(tomorrow)
