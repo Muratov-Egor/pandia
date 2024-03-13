@@ -29,16 +29,18 @@ export class BaseSteps {
   }
 
   async mockGraphQlResponse(url: string, operationName: string, newBody: object = {}) {
-    await this.page.route(url, route => {
-      const body = route.request().postDataJSON()
-
-      if (body.operation_name === operationName) {
-        route.fulfill({
-          status: 200,
-          contentType: 'application/json',
-          body: JSON.stringify(newBody)
-        })
-      }
-    })
+    await allure.step(`Мокирование ответа на запрос ${operationName} по адресу ${url}`, async () => {
+      await this.page.route(url, route => {
+        if (route.request().postData().includes(operationName)) {
+          route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify(newBody)
+          });
+        } else {
+          route.continue();
+        }
+      });
+    });
   }
 }
