@@ -140,13 +140,6 @@ export class SearchFormPage {
     });
   }
 
-  async assertThatDestinationIsEqualToExpected(expectedDestination: string) {
-    await allure.step(`В поле "Куда" указано: ${expectedDestination}`, async () => {
-      const destinationInputValue = await this.destinationInput.getAttribute('value');
-      expect(destinationInputValue).toEqual(expectedDestination);
-    });
-  }
-
   async uncheckHotelCheckbox() {
     await allure.step('Снять отельный чекбокс', async () => {
       await this.hotelCheckbox.click();
@@ -163,6 +156,20 @@ export class SearchFormPage {
     await allure.step(`В поле "Откуда" указано: ${origin}, а в поле "Куда" указано: ${destination}`, async () => {
       await expect(this.originIata).toHaveText(origin);
       await expect(this.destinationIata).toHaveText(destination);
+    });
+  }
+
+  async assertThatOriginIsEqualToExpected(origin: string) {
+    await allure.step(`В поле "Откуда" указано: ${origin}`, async () => {
+      const originInputValue = await this.originInput.getAttribute('value');
+      expect(originInputValue).toEqual(origin);
+    });
+  }
+
+  async assertThatDestinationIsEqualToExpected(destination: string) {
+    await allure.step(`В поле "Куда" указано: ${destination}`, async () => {
+      const destinationInputValue = await this.destinationInput.getAttribute('value');
+      expect(destinationInputValue).toEqual(destination);
     });
   }
 
