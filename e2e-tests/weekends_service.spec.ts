@@ -62,7 +62,7 @@ test.describe('Сервис выходных', () => {
     await searchForm.fillInDestination({isWeekend: true})
     const firstCityName = await weekendsService.getFirstCityName()
     await weekendsService.selectFirstCity()
-
+    // @ts-ignore
     await searchForm.assertThatDestinationIsEqualToExpected(firstCityName)
     await weekendsService.assertThatWeekendsCityListIsNotVisible()
     await weekendsWidget.assertThatWidgetIsVisible()

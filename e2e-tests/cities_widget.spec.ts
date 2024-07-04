@@ -29,6 +29,7 @@ test.describe('Экрана Страны. Виджет "Городов"', () => 
     await citiesWidgetPage.selectCity();
 
     await citiesWidgetPage.assertThatCityListIsNotVisible();
+    // @ts-ignore
     await searchFormPage.assertThatDestinationIsEqualToExpected(cityName);
   });
 
@@ -43,6 +44,7 @@ test.describe('Экрана Страны. Виджет "Городов"', () => 
     await citiesWidgetPage.selectCity(true);
 
     await citiesWidgetPage.assertThatCityListIsNotVisible();
+    // @ts-ignore
     await searchFormPage.assertThatDestinationIsEqualToExpected(cityName);
   });
 

@@ -16,11 +16,13 @@ export class BaseSteps {
     flagOptions?: object,
     isFirstQueryParam?: boolean
   }) {
-    return await allure.step(`Переопределение флага: ${flagName}}`, async () => {
-      const overrideFlag = isFirstQueryParam ? `?ffv2_overrides=` : `&ffv2_overrides=`
+    return await allure.step(`Переопределение флага: ${flagName}}`,
+      // @ts-ignore
+      async () => {
+        const overrideFlag = isFirstQueryParam ? `?ffv2_overrides=` : `&ffv2_overrides=`
 
-      return `${overrideFlag}{"${flagName}":${JSON.stringify(flagOptions)}}`
-    });
+        return `${overrideFlag}{"${flagName}":${JSON.stringify(flagOptions)}}`
+      });
   }
 
   async waitForUrl(url: string) {

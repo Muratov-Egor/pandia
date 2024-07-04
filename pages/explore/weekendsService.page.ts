@@ -11,9 +11,11 @@ export class WeekendsServicePage {
   }
 
   async getFirstCityName() {
-    return await allure.step('Получить название первого города ', async () => {
-      return await this.firstCityName.textContent();
-    });
+    return await allure.step('Получить название первого города ',
+      // @ts-ignore
+      async () => {
+        return await this.firstCityName.textContent();
+      });
   }
 
   async selectFirstCity() {

@@ -41,7 +41,8 @@ test.describe('Выдача цен на выходные', () => {
 
     await searchForm.openCalendar()
     await calendar.selectAllWeekends(true)
-    const firstTicketLink = await weekendsPricesWidget.getFirstTicketLink()
+    let firstTicketLink = await weekendsPricesWidget.getFirstTicketLink()
+    // @ts-ignore
     const {origin, destination, startDate, endDate} = getTicketInfo(firstTicketLink)
     await weekendsPricesWidget.chooseFirstTicket()
 

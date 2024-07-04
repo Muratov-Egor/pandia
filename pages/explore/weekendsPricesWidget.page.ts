@@ -14,9 +14,11 @@ export class WeekendsPricesWidget {
   }
 
   async getFirstTicketLink() {
-    return await allure.step('Получить ссылку на первый билет', async () => {
-      return this.firstTicketLink.getAttribute('href');
-    });
+    return await allure.step('Получить ссылку на первый билет',
+      // @ts-ignore
+      async () => {
+        return this.firstTicketLink.getAttribute('href');
+      });
   }
 
   async chooseFirstTicket() {
