@@ -19,7 +19,7 @@ test.describe('Экрана Страны. Виджет "Городов"', () => 
   });
 
   test('Скрыть виджет "Городов" после выбора  первого города', async ({page}) => {
-    await allureTestInfo({id: "8418", owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
 
     const citiesWidgetPage = new CitiesWidgetPage(page);
     const searchFormPage = new SearchFormPage(page);
@@ -33,7 +33,7 @@ test.describe('Экрана Страны. Виджет "Городов"', () => 
   });
 
   test('Скрыть виджет "Городов" после выбора перового города в модалке "Все города"', async ({page}) => {
-    await allureTestInfo({id: "8416", owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
 
     const citiesWidgetPage = new CitiesWidgetPage(page);
     const searchFormPage = new SearchFormPage(page);
@@ -47,7 +47,7 @@ test.describe('Экрана Страны. Виджет "Городов"', () => 
   });
 
   test('Скрыть виджет "Городов"  после указания города в поле "Куда"', async ({page}) => {
-    await allureTestInfo({id: "8417", owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
 
     const citiesWidgetPage = new CitiesWidgetPage(page);
     const searchFormPage = new SearchFormPage(page);

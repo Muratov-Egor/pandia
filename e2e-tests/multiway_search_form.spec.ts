@@ -9,7 +9,7 @@ import {BaseSteps} from "../pages/baseSteps.page";
 
 test.describe('Сложная форма поиска', () => {
   test('Запуск поиска из сложной формы поиска', async ({page}) => {
-    await allureTestInfo({id: "9389", owner: "Egor Muratov", team: "Explore"})
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"})
 
     const baseStep = new BaseSteps(page)
     const searchForm = new SearchFormPage(page);
@@ -34,7 +34,7 @@ test.describe('Сложная форма поиска', () => {
   });
 
   test('Открытие предварительно заполненной сложной формы поиска по прямой ссылке', async ({page}) => {
-    await allureTestInfo({id: "9433", owner: "Egor Muratov", team: "Explore"})
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"})
 
     const baseStep = new BaseSteps(page)
     const multiwaySearchForm = new MultiwaySearchFormPage(page);

@@ -21,7 +21,7 @@ const optionsFlexConfig = {
 
 test.describe('Сервис выходных', () => {
   test('Открытие сервисы "На выходные" по прямой ссылке', async ({page}) => {
-    await allureTestInfo({id: "10567", owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
 
     const baseStep = new BaseSteps(page)
     const searchForm = new SearchFormPage(page);
@@ -43,7 +43,7 @@ test.describe('Сервис выходных', () => {
   })
 
   test('Переход на страницу города из сервиса "На выходные"', async ({page}) => {
-    await allureTestInfo({id: "10568", owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
 
     const baseStep = new BaseSteps(page)
     const searchForm = new SearchFormPage(page);
@@ -70,7 +70,7 @@ test.describe('Сервис выходных', () => {
   });
 
   test('Переход в сервис "На выходные" с блока "На Выходные" на главном экране"', async ({page}) => {
-    await allureTestInfo({id: "10525", owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
 
     const baseStep = new BaseSteps(page)
     const mainPageWidget = new MainPageWidgetPage(page);

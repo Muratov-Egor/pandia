@@ -10,7 +10,7 @@ import {BaseSteps} from "../pages/baseSteps.page";
 
 test.describe('Обычная форма поиска', () => {
   test('После запуска поиска на странице /search серчфома остается заполненной', async ({page}) => {
-    await allureTestInfo({id: "9435", owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
 
     const baseStep = new BaseSteps(page)
     const searchFormPage = new SearchFormPage(page);
@@ -36,7 +36,7 @@ test.describe('Обычная форма поиска', () => {
   });
 
   test('Открытие предварительно заполненной формы поиска по прямой ссылке', async ({page}) => {
-    await allureTestInfo({id: "9434", owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
 
     const baseStep = new BaseSteps(page)
     const searchFormPage = new SearchFormPage(page);
