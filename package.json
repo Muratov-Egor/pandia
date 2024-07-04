@@ -5,19 +5,27 @@
   "repository": "https://github.com/Muratov-Egor/pandia.git",
   "author": "egormuratov <egor_muratov@hotmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "@playwright/test": "^1.41.1",
-    "@types/node": "^20.11.10"
-  },
   "scripts": {
     "test": "npx playwright test",
     "ui-test": "npx playwright test --ui",
     "report": "allure generate allure-results -o allure-report --clean && allure serve allure-results",
-    "report:clean": "rm -rf allure-results allure-report test-results"
+    "report:clean": "rm -rf allure-results allure-report test-results",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "allure-commandline": "^2.26.0",
-    "allure-playwright": "^2.11.1",
-    "date-fns": "^3.3.1"
+    "@playwright/test": "^1.45.1",
+    "@types/node": "^20.14.9",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "allure-commandline": "^2.29.0",
+    "allure-playwright": "^3.0.0-beta.5",
+    "date-fns": "^3.6.0",
+    "eslint": "9.x",
+    "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.6.0",
+    "globals": "^15.8.0",
+    "typescript-eslint": "^7.15.0"
   }
 }
