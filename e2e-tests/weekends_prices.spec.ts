@@ -32,7 +32,7 @@ test.describe('Выдача цен на выходные', () => {
   });
 
   test('Переход на страницу выдачи /search, при нажатии на мин. прайс', async ({context, page}) => {
-    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore", feature: "На выходные"});
 
 
     const searchForm = new SearchFormPage(page);
@@ -59,7 +59,7 @@ test.describe('Выдача цен на выходные', () => {
   });
 
   test('Отсортировать выдачу выходных по цене', async ({page}) => {
-    await allureTestInfo({owner: "Egor Muratov", team: "Explore"});
+    await allureTestInfo({owner: "Egor Muratov", team: "Explore", feature: "На выходные"});
 
     const searchForm = new SearchFormPage(page);
     const calendar = new CalendarPage(page);
