@@ -18,6 +18,8 @@ export default [
 		rules: {
 			...pluginJs.configs.recommended.rules,
 			...tseslint.configs.recommended.rules,
+			'no-unused-vars': 'off', // Disable the rule for JavaScript files
+			'@typescript-eslint/no-unused-vars': 'off', // Disable the rule for TypeScript files
 		},
 	},
 	{
