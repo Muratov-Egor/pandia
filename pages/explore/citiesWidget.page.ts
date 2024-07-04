@@ -1,9 +1,7 @@
-import {expect, Locator, Page} from '@playwright/test';
+import {expect, Page} from '@playwright/test';
 import {allure} from "allure-playwright";
 
 export class CitiesWidgetPage {
-  constructor(private readonly page: Page) {}
-
   readonly cityList = this.page.getByTestId('city-list');
   readonly cityCard = this.page.getByTestId('city-card').first();
   readonly cityName = this.cityCard.getByTestId('city-name');
@@ -11,6 +9,9 @@ export class CitiesWidgetPage {
   readonly allCityModal = this.page.getByTestId('all-cities-modal');
   readonly cityCardInModal = this.allCityModal.getByTestId('city-card').first();
   readonly cityNameInModal = this.cityCardInModal.getByTestId('city-name');
+
+  constructor(private readonly page: Page) {
+  }
 
   async selectCity(isModal = false) {
     await allure.step('Выбрать первый город из списка', async () => {

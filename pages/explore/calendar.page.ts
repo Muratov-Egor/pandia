@@ -3,13 +3,15 @@ import {dateInCalendarFormat} from "../../utils/DateFormarter";
 import {allure} from "allure-playwright";
 
 export class CalendarPage {
-  constructor(private readonly page: Page) {}
-
-  readonly date = (date: string) => this.page.getByTestId(`date-${date}`)
   readonly calendarActionButton = this.page.getByTestId('calendar-action-button');
   readonly tabWeekends = this.page.getByTestId('tab-weekends');
   readonly toggleAllWeekends = this.page.getByTestId('select-all-weekends');
   readonly toggleAdditionalDays = this.page.getByTestId('select-additional-days');
+
+  constructor(private readonly page: Page) {
+  }
+
+  readonly date = (date: string) => this.page.getByTestId(`date-${date}`)
 
   async selectTripDurationDates(startDate: Date, endDate?: Date) {
     await allure.step(`Выбор даты вылета`, async () => {
@@ -25,15 +27,6 @@ export class CalendarPage {
         await this.calendarActionButton.click()
       });
     }
-  }
-
-  private async chooseDate(date: Date) {
-    const dateInCalendar = dateInCalendarFormat(date);
-
-    await allure.step(`Выбрать дату ${dateInCalendar}`, async () => {
-      await this.date(dateInCalendar).hover();
-      await this.date(dateInCalendar).click();
-    });
   }
 
   async selectAllWeekends(additionalDays: boolean = false) {
@@ -55,6 +48,15 @@ export class CalendarPage {
       await allure.step('Клик по кнопке "Выбрать"', async () => {
         await this.calendarActionButton.click();
       });
+    });
+  }
+
+  private async chooseDate(date: Date) {
+    const dateInCalendar = dateInCalendarFormat(date);
+
+    await allure.step(`Выбрать дату ${dateInCalendar}`, async () => {
+      await this.date(dateInCalendar).hover();
+      await this.date(dateInCalendar).click();
     });
   }
 }

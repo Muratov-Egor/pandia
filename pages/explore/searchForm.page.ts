@@ -3,8 +3,6 @@ import {allure} from "allure-playwright";
 import {dateInSearchForm} from "../../utils/DateFormarter";
 
 export class SearchFormPage {
-  constructor(private readonly page: Page) {}
-
   readonly searchForm = this.page.getByTestId('avia-form');
   readonly originInput = this.page.getByTestId('origin-input');
   readonly destinationInput = this.page.getByTestId('destination-input');
@@ -19,9 +17,12 @@ export class SearchFormPage {
   readonly passengerNumbers = this.page.getByTestId('passenger-numbers');
   readonly tripClass = this.page.getByTestId('trip-class');
   readonly multiwaySearchFormButton = this.page.getByTestId('switch-to-multiwayform');
-
   readonly originIata = this.page.locator(`xpath=//*[@data-test-id="origin-input"]/following-sibling::*[@data-test-id="iata"]`)
   readonly destinationIata = this.page.locator(`xpath=//*[@data-test-id="destination-input"]/following-sibling::*[@data-test-id="iata"]`)
+
+  constructor(private readonly page: Page) {
+  }
+
   readonly suggestedCity = (city: string) => this.page.getByTestId(`suggested-city-${city}`);
   readonly suggestedAirport = (airport: string) => this.page.getByTestId(`suggested-airport-${airport}`);
   readonly suggestedCountry = (country: string) => this.page.getByTestId(`suggested-country-${country}`);
@@ -196,17 +197,17 @@ export class SearchFormPage {
     });
   }
 
+  async switchToMultiwaySearchForm() {
+    await allure.step('Переключиться на форму сложного поиска', async () => {
+      await this.multiwaySearchFormButton.click();
+    });
+  }
+
   private async addPassenger(passengerType: string, count: number) {
     await allure.step(`Добавить ${count} пассажиров типа ${passengerType}`, async () => {
       for (let i = 0; i < count; i++) {
         await this.increaseButton(passengerType).click();
       }
-    });
-  }
-
-  async switchToMultiwaySearchForm() {
-    await allure.step('Переключиться на форму сложного поиска', async () => {
-      await this.multiwaySearchFormButton.click();
     });
   }
 }
