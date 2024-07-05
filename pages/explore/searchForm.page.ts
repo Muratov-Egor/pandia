@@ -138,6 +138,8 @@ export class SearchFormPage {
       if (isDestination) {
         await expect(this.destinationInput).toHaveAttribute('value');
       }
+      //todo remove it later
+      await this.page.waitForTimeout(500);
     });
   }
 
