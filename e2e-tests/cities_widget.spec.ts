@@ -9,7 +9,7 @@ import {IataCityCode} from "../enums/IataCityCode";
 import {allureTestInfo} from "../utils/AllureHelper";
 import {BaseSteps} from "../pages/baseSteps.page";
 
-test.describe.skip('Экрана Страны. Виджет "Городов"', () => {
+test.describe('Экрана Страны. Виджет "Городов"', () => {
   test.beforeEach(async ({page}) => {
     const baseStep = new BaseSteps(page)
     const searchFormPage = new SearchFormPage(page);

@@ -6,14 +6,16 @@ import {allureTestInfo} from "../utils/AllureHelper";
 import {MULTIWAY_PARAMS_MOW_IST_5JULY_IST_LON_9OCTOBER} from "../constants/explore/DirectionUrl";
 import {IataCityCode} from "../enums/IataCityCode";
 import {BaseSteps} from "../pages/baseSteps.page";
+import {ResultPage} from "../pages/serp/result.page";
 
-test.describe.skip('Сложная форма поиска', () => {
+test.describe('Сложная форма поиска', () => {
   test('Запуск поиска из сложной формы поиска', async ({page}) => {
     await allureTestInfo({owner: "Egor Muratov", team: "Explore", feature: "Форма сложного поиска"})
 
     const baseStep = new BaseSteps(page)
     const searchForm = new SearchFormPage(page);
     const multiwaySearchForm = new MultiwaySearchFormPage(page);
+    const resultsPage = new ResultPage(page);
 
     await baseStep.openPage('/');
     await searchForm.waitForSearchFormToLoad();
@@ -31,6 +33,8 @@ test.describe.skip('Сложная форма поиска', () => {
     await multiwaySearchForm.assertThatCollapsedFormSegmentIsEqualToExpected(firstSegment);
     await multiwaySearchForm.assertThatCollapsedFormSegmentIsEqualToExpected(secondSegment);
     await multiwaySearchForm.assertThatCollapsedFormSegmentIsEqualToExpected(thirdSegment);
+    await resultsPage.assertThatSearchResultContainsTickets();
+    await resultsPage.assertThatNumberOfSegmentsInTicketIs(3);
   });
 
   test('Открытие предварительно заполненной сложной формы поиска по прямой ссылке', async ({page}) => {

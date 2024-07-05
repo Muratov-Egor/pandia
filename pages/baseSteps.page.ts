@@ -27,7 +27,7 @@ export class BaseSteps {
 
   async waitForUrl(url: string) {
     await allure.step(`Ожидание перехода на страницу: ${url}`, async () => {
-      await this.page.waitForURL(url, {waitUntil: "domcontentloaded", timeout: 50000});
+      await this.page.waitForURL(url, {waitUntil: "load", timeout: 50000});
     });
   }
 }
