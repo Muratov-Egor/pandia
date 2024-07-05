@@ -7,6 +7,7 @@ import {IataCityCode} from "../enums/IataCityCode";
 import {nextWeek, today} from "../utils/GetDate";
 import {MOSCOW_LONDON_WITH_DATES_21JUNE_17JULY} from "../constants/explore/DirectionUrl";
 import {BaseSteps} from "../pages/baseSteps.page";
+import {ResultPage} from "../pages/serp/result.page";
 
 test.describe('Обычная форма поиска', () => {
   test('После запуска поиска на странице /search серчфома остается заполненной', async ({page}) => {
@@ -15,6 +16,7 @@ test.describe('Обычная форма поиска', () => {
     const baseStep = new BaseSteps(page)
     const searchFormPage = new SearchFormPage(page);
     const calendar = new CalendarPage(page);
+    const resultsPage = new ResultPage(page);
 
     await baseStep.openPage('/');
     await searchFormPage.waitForSearchFormToLoad();
@@ -33,6 +35,8 @@ test.describe('Обычная форма поиска', () => {
     await searchFormPage.assertThatEndDateIsEqualToExpected(nextWeek);
     await searchFormPage.assertThatNumberOfPassengersIsEqualToExpected(7)
     await searchFormPage.assertThatTripClassIsEqualToExpected('Бизнес');
+    await resultsPage.assertThatSearchResultContainsTickets();
+    await resultsPage.assertThatNumberOfSegmentsInTicketIs(2);
   });
 
   test('Открытие предварительно заполненной формы поиска по прямой ссылке', async ({page}) => {
