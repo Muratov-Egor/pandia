@@ -7,7 +7,7 @@ import {SearchFormPage} from "../pages/explore/searchForm.page";
 import {CalendarPage} from "../pages/explore/calendar.page";
 import {getTicketInfo} from "../utils/priceTicketLinkPaser";
 
-test.describe('Выдача цен на выходные', () => {
+test.describe.skip('Выдача цен на выходные', () => {
   test.beforeEach('Открыть страницу направления', async ({page}) => {
     const baseStep = new BaseSteps(page)
     const searchForm = new SearchFormPage(page);

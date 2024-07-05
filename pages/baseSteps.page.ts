@@ -7,7 +7,7 @@ export class BaseSteps {
 
   async openPage(url: string) {
     await allure.step(`Открыть страницу: ${url}`, async () => {
-      await this.page.goto(url, {waitUntil: "domcontentloaded"});
+      await this.page.goto(url, {waitUntil: "load"});
     });
   }
 

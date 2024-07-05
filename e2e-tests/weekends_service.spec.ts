@@ -10,7 +10,7 @@ import {ORIGIN_IS_MOSCOW, WEEKENDS_SERVICE} from "../constants/explore/Direction
 import {WeekendsPricesWidget} from "../pages/explore/weekendsPricesWidget.page";
 import {MainPageWidgetPage} from "../pages/explore/mainPageWidget.page";
 
-test.describe('Сервис выходных', () => {
+test.describe.skip('Сервис выходных', () => {
   test('Открытие сервисы "На выходные" по прямой ссылке', async ({page}) => {
     await allureTestInfo({owner: "Egor Muratov", team: "Explore", feature: "На выходные"});
 

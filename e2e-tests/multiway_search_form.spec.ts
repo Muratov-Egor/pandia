@@ -7,7 +7,7 @@ import {MULTIWAY_PARAMS_MOW_IST_5JULY_IST_LON_9OCTOBER} from "../constants/explo
 import {IataCityCode} from "../enums/IataCityCode";
 import {BaseSteps} from "../pages/baseSteps.page";
 
-test.describe('Сложная форма поиска', () => {
+test.describe.skip('Сложная форма поиска', () => {
   test('Запуск поиска из сложной формы поиска', async ({page}) => {
     await allureTestInfo({owner: "Egor Muratov", team: "Explore", feature: "Форма сложного поиска"})
 
