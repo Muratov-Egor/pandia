@@ -21,6 +21,7 @@ export class CitiesWidgetPage {
   }
 
   async getCityName(isModal = false) {
+    // @ts-ignore
     return allure.step('Получить название первого города ', async () => {
       return isModal ? await this.cityNameInModal.textContent() : await this.cityName.textContent();
     });
