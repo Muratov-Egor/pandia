@@ -7,17 +7,8 @@ import {CalendarPage} from "../pages/explore/calendar.page";
 import {WeekendsServicePage} from "../pages/explore/weekendsService.page";
 
 import {ORIGIN_IS_MOSCOW, WEEKENDS_SERVICE} from "../constants/explore/DirectionUrl";
-import {FLEXIBLE_CALENDAR_CONFIG} from "../constants/Flags";
 import {WeekendsPricesWidget} from "../pages/explore/weekendsPricesWidget.page";
 import {MainPageWidgetPage} from "../pages/explore/mainPageWidget.page";
-
-const optionsFlexConfig = {
-  variantKey: "onlyWeekends",
-  variantAttachment: {
-    config: {"flexibleDates": false, "onlyPopularDestinations": false, "tripPeriod": false, "weekends": true},
-    enabled: true
-  }
-}
 
 test.describe('Сервис выходных', () => {
   test('Открытие сервисы "На выходные" по прямой ссылке', async ({page}) => {
@@ -28,13 +19,7 @@ test.describe('Сервис выходных', () => {
     const calendar = new CalendarPage(page);
     const weekendsService = new WeekendsServicePage(page);
 
-    const flexConfig = await baseStep.overrideFrontEndFlagr({
-      flagName: FLEXIBLE_CALENDAR_CONFIG,
-      flagOptions: optionsFlexConfig,
-      isFirstQueryParam: false
-    })
-
-    await baseStep.openPage(WEEKENDS_SERVICE + flexConfig)
+    await baseStep.openPage(WEEKENDS_SERVICE)
     await searchForm.waitForSearchFormToLoad(true)
 
     await searchForm.openCalendar()
@@ -50,13 +35,7 @@ test.describe('Сервис выходных', () => {
     const weekendsService = new WeekendsServicePage(page);
     const weekendsWidget = new WeekendsPricesWidget(page);
 
-    const flexConfig = await baseStep.overrideFrontEndFlagr({
-      flagName: FLEXIBLE_CALENDAR_CONFIG,
-      flagOptions: optionsFlexConfig,
-      isFirstQueryParam: false
-    })
-
-    await baseStep.openPage(ORIGIN_IS_MOSCOW + flexConfig)
+    await baseStep.openPage(ORIGIN_IS_MOSCOW)
     await searchForm.waitForSearchFormToLoad()
 
     await searchForm.fillInDestination({isWeekend: true})
@@ -76,13 +55,7 @@ test.describe('Сервис выходных', () => {
     const mainPageWidget = new MainPageWidgetPage(page);
     const weekendsService = new WeekendsServicePage(page);
 
-    const flexConfig = await baseStep.overrideFrontEndFlagr({
-      flagName: FLEXIBLE_CALENDAR_CONFIG,
-      flagOptions: optionsFlexConfig,
-      isFirstQueryParam: false
-    })
-
-    await baseStep.openPage(ORIGIN_IS_MOSCOW + flexConfig)
+    await baseStep.openPage(ORIGIN_IS_MOSCOW)
 
     await mainPageWidget.goToWeekendsService()
     await weekendsService.assertThatWeekendsCityListIsVisible()

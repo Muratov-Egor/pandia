@@ -1,5 +1,4 @@
 import {test} from "@playwright/test";
-import {FLEXIBLE_CALENDAR_CONFIG} from "../constants/Flags";
 import {SAINT_PETERSBURG_MOSCOW_FLIGHT} from "../constants/explore/DirectionUrl";
 import {BaseSteps} from "../pages/baseSteps.page";
 import {allureTestInfo} from "../utils/AllureHelper";
@@ -8,32 +7,17 @@ import {SearchFormPage} from "../pages/explore/searchForm.page";
 import {CalendarPage} from "../pages/explore/calendar.page";
 import {getTicketInfo} from "../utils/priceTicketLinkPaser";
 
-const optionsFlexConfig = {
-  variantKey: "onlyWeekends",
-  variantAttachment: {
-    config: {"flexibleDates": false, "onlyPopularDestinations": false, "tripPeriod": false, "weekends": true},
-    enabled: true
-  }
-}
-
 test.describe('Выдача цен на выходные', () => {
-  test.beforeEach('Включите флаг гибкого календаря и откройте страницу направления', async ({page}) => {
+  test.beforeEach('Открыть страницу направления', async ({page}) => {
     const baseStep = new BaseSteps(page)
     const searchForm = new SearchFormPage(page);
 
-    const flexConfig = await baseStep.overrideFrontEndFlagr({
-      flagName: FLEXIBLE_CALENDAR_CONFIG,
-      flagOptions: optionsFlexConfig,
-      isFirstQueryParam: false
-    })
-
-    await baseStep.openPage(SAINT_PETERSBURG_MOSCOW_FLIGHT + flexConfig)
+    await baseStep.openPage(SAINT_PETERSBURG_MOSCOW_FLIGHT)
     await searchForm.waitForSearchFormToLoad(true)
   });
 
   test('Переход на страницу выдачи /search, при нажатии на мин. прайс', async ({context, page}) => {
     await allureTestInfo({owner: "Egor Muratov", team: "Explore", feature: "На выходные"});
-
 
     const searchForm = new SearchFormPage(page);
     const calendar = new CalendarPage(page);
