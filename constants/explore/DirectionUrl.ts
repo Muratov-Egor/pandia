@@ -4,3 +4,4 @@ export const MULTIWAY_PARAMS_MOW_IST_5JULY_IST_LON_9OCTOBER = '/?params=MOW0507I
 export const WEEKENDS_SERVICE = '?params=MOW1&service=weekends'
 export const ORIGIN_IS_MOSCOW = '/?params=MOW1'
 export const SAINT_PETERSBURG_MOSCOW_FLIGHT = '/?params=LEDMOW1'
+export const ORIGIN_IS_KATHMANDU = '/?params=KTM1'
