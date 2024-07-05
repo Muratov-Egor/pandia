@@ -19,11 +19,11 @@ export class MultiwaySearchFormPage {
 
   readonly direction = (direction: number) => this.page.getByTestId(`multiway-direction-${direction}`);
 
-  readonly originInput = (direction: number) => this.direction(direction).getByTestId('origin-input');
+  readonly originInput = (direction: number) => this.direction(direction).getByTestId('multiway-origin-input');
 
   readonly originIata = (direction: number) => this.direction(direction).getByTestId('multiway-origin').getByTestId('iata')
 
-  readonly destinationInput = (direction: number) => this.direction(direction).getByTestId('destination-input');
+  readonly destinationInput = (direction: number) => this.direction(direction).getByTestId('multiway-destination-input');
 
   readonly destinationIata = (direction: number) => this.direction(direction).getByTestId('multiway-destination').getByTestId('iata');
 
