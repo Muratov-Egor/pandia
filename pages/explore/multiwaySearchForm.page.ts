@@ -44,11 +44,15 @@ export class MultiwaySearchFormPage {
 
     await allure.step(`Заполнить сегмент №${segmentNumber}`, async () => {
       await allure.step(`Ввести в поле "Откуда" значение: ${origin}`, async () => {
+        //todo придумать как убрать ожидание
+        await this.page.waitForTimeout(500);
         await this.originInput(segmentNumber).fill(origin);
         await this.suggestedCity(origin).click();
       });
 
       await allure.step(`Ввести в поле "Куда" значение: ${destination}`, async () => {
+        //todo придумать как убрать ожидание
+        await this.page.waitForTimeout(500);
         await this.destinationInput(segmentNumber).fill(destination);
         await this.suggestedCity(destination).click();
       });
@@ -80,7 +84,7 @@ export class MultiwaySearchFormPage {
 
   async assertThatMultiwaySearchFormAppeared() {
     await allure.step('Форма сложного поиска отображается', async () => {
-      await this.multiwaySearchForm.isVisible();
+      await this.multiwaySearchForm.waitFor({state: 'visible'});
     });
   }
 
